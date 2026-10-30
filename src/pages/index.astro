@@ -95,10 +95,10 @@ const description = 'Tarvanta is an independent, insights-led venture platform c
     </main>
     <footer><div class="wrap footer-inner"><div class="footer-brand">TARVANTA<span>INSIGHT INTO ACTION.</span></div><div class="footer-right"><div class="footer-links"><a href="#vision">Vision</a><a href="#founder">Founder</a><a href="#connect">Contact</a></div><div class="copyright">© {new Date().getFullYear()} Tarvanta. All rights reserved.</div></div></div></footer>
     <script>
-      const nav = document.querySelector('#site-nav');
-      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector<HTMLElement>('#site-nav');
+      const menuToggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
       menuToggle?.addEventListener('click', () => {
-        const isOpen = nav.classList.toggle('open');
+        const isOpen = nav?.classList.toggle('open') ?? false;
         menuToggle.setAttribute('aria-expanded', String(isOpen));
         menuToggle.textContent = isOpen ? 'Close −' : 'Menu +';
         document.body.classList.toggle('menu-open', isOpen);
@@ -115,13 +115,14 @@ const description = 'Tarvanta is an independent, insights-led venture platform c
         }, {threshold:.12,rootMargin:'0px 0px -45px 0px'});
         revealItems.forEach(item => revealObserver.observe(item));
       } else revealItems.forEach(item => item.classList.add('is-visible'));
-      const contactForm = document.querySelector('#contact-form');
-      const submitButton = document.querySelector('#submit-btn');
-      const formStatus = document.querySelector('#form-status');
-      contactForm?.addEventListener('submit', async event => {
+      const contactForm = document.querySelector<HTMLFormElement>('#contact-form');
+      const submitButton = document.querySelector<HTMLButtonElement>('#submit-btn');
+      const formStatus = document.querySelector<HTMLElement>('#form-status');
+      const honeypot = contactForm?.querySelector<HTMLInputElement>('[name="_honey"]');
+      if (contactForm && submitButton && formStatus && honeypot) contactForm.addEventListener('submit', async event => {
         event.preventDefault();
         if (!contactForm.reportValidity()) return;
-        if (contactForm.querySelector('[name="_honey"]').value) return;
+        if (honeypot.value) return;
         submitButton.disabled = true;
         submitButton.innerHTML = 'Sending…';
         formStatus.textContent = 'Sending your message securely…';
