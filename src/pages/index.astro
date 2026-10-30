@@ -1,244 +1,81 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import Strata from '@/components/art/Strata.astro';
-import Split from '@/components/ui/Split.astro';
-import Button from '@/components/ui/Button.astro';
-import Ecosystem from '@/components/sections/Ecosystem.astro';
-import InsightList from '@/components/sections/InsightList.astro';
-import { organizationSchema, websiteSchema } from '@/components/seo/schema';
-import { approach } from '@/data/approach';
-import { site } from '@/config/site';
-import { getInsights, getVentures } from '@/lib/content';
-
-const insights = (await getInsights()).slice(0, 3);
-const ventures = await getVentures();
+const title = 'Tarvanta — Insight into Action';
+const description = 'An insights-led global venture platform exploring strategic perspectives, emerging opportunities and meaningful venture development.';
 ---
-
-<BaseLayout
-  description="Tarvanta is an insights-led global venture platform. It brings research, problem-solving and venture development together, with a focus on ideas that can become useful, enduring businesses."
-  schema={[organizationSchema(), websiteSchema()]}
->
-  <section aria-labelledby="hero-title" class="relative overflow-hidden">
-    <div class="page-wrap pt-14 md:pt-24 lg:pt-28">
-      <p class="t-label mb-7">An insights-led global venture platform</p>
-      <h1 id="hero-title" class="t-hero max-w-[11ch] text-charcoal">
-        Ideas into enduring ventures.
-      </h1>
-
-      <div class="mt-10 grid gap-8 md:mt-14 md:grid-cols-12">
-        <div class="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
-          <p class="t-lede text-graphite">
-            Tarvanta brings research, problem-solving and venture development together. The starting
-            point is not a product or a pitch. It is a meaningful problem, understood well enough to
-            decide what should happen next.
-          </p>
-          <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5">
-            <Button href="/approach/">See how we think</Button>
-            <Button href="/contact/" variant="quiet">Start a conversation</Button>
-          </div>
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#16182A" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://www.tarvanta.in/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content="https://www.tarvanta.in/" />
+    <meta property="og:image" content="https://www.tarvanta.in/founder-insight-into-action.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,350;6..72,400;6..72,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root{--ink:#16182A;--khadi:#F4EFE6;--paper:#FBF8F3;--laterite:#A8442A;--ember:#E07A55;--muted:#B9B4AD;--line:rgba(244,239,230,.2);--serif:'Newsreader',Georgia,serif;--sans:'DM Sans',Arial,sans-serif}
+      *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--paper)}body{margin:0;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}a:focus-visible{outline:2px solid var(--ember);outline-offset:4px}.wrap{width:min(1320px,calc(100% - 9vw));margin:auto}
+      .hero{min-height:min(880px,100svh);position:relative;display:flex;align-items:stretch;overflow:hidden;background:#171821;color:var(--khadi)}
+      .hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;opacity:.93}
+      .hero:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(13,14,22,.96) 0%,rgba(13,14,22,.88) 28%,rgba(13,14,22,.48) 51%,rgba(13,14,22,.05) 78%),linear-gradient(0deg,rgba(13,14,22,.42),transparent 38%)}
+      .hero:after{content:"";position:absolute;z-index:2;left:4.2%;top:0;bottom:0;width:1px;background:rgba(244,239,230,.18)}
+      .hero-inner{position:relative;z-index:3;display:flex;flex-direction:column;justify-content:space-between;padding:42px 0 54px;min-height:min(880px,100svh)}
+      .topline{display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:13px;font:500 29px/1 var(--serif);letter-spacing:.015em}.brand img{width:34px;height:34px}.top-meta,.eyebrow,.micro{font-size:10px;letter-spacing:.28em;text-transform:uppercase;font-weight:600}.top-meta{color:#e5d5c5}
+      .hero-copy{max-width:700px;padding:70px 0 55px}.eyebrow{color:#e7c7ad;margin:0 0 28px}.eyebrow:after{content:"";display:block;width:48px;height:1px;background:#d8b69d;margin-top:26px}
+      h1{font:350 clamp(4.4rem,9vw,8.7rem)/.88 var(--serif);letter-spacing:-.055em;margin:0 0 26px;max-width:8ch}h1 span{display:block;color:#e7c7ad;font-style:italic;font-weight:350}
+      .descriptor{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:#e7d9ca;margin:0 0 42px;line-height:2}
+      .intro{font:400 clamp(1.25rem,2vw,1.75rem)/1.36 var(--serif);color:#f0e9df;max-width:570px;margin:0}
+      .hero-bottom{display:flex;align-items:end;justify-content:space-between;gap:30px;border-top:1px solid var(--line);padding-top:22px}.signature{font:500 19px var(--sans);letter-spacing:.34em}.signature small{display:block;font:500 9px var(--sans);letter-spacing:.31em;margin-top:9px;color:#d6c7b7}.scroll-note{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#d6c7b7}
+      .section{padding:clamp(82px,11vw,150px) 0}.section-label{font-size:10px;text-transform:uppercase;letter-spacing:.28em;color:var(--laterite);font-weight:600;margin:0 0 24px}.section h2{font:350 clamp(2.8rem,6vw,6rem)/.98 var(--serif);letter-spacing:-.045em;margin:0;max-width:11ch}.section h2 em{font-weight:350;color:var(--laterite)}.lead{font:400 clamp(1.25rem,2vw,1.65rem)/1.45 var(--serif);max-width:620px;color:#444451;margin:0}
+      .vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:start}.vision-copy{padding-top:8px}.vision-copy p{font:400 18px/1.65 var(--serif);color:#55545b;margin:0 0 20px;max-width:560px}
+      .mission{background:var(--ink);color:var(--khadi)}.mission .section-label{color:#e7a58b}.mission-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:8vw}.mission h2{max-width:10ch}.mission-copy{padding-top:12px}.mission-copy p{font:400 clamp(1.4rem,2.2vw,2rem)/1.45 var(--serif);color:#e8e1d8;margin:0 0 24px;max-width:650px}.mission-note{border-top:1px solid var(--line);padding-top:22px;color:#c9c1b8;font-size:11px;letter-spacing:.16em;text-transform:uppercase}
+      .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:75px;border-top:1px solid #d9d2c7}.pillar{padding:28px 28px 0 0}.pillar+.pillar{padding-left:28px;border-left:1px solid #d9d2c7}.number{font:350 15px var(--serif);color:var(--laterite)}.pillar h3{font:400 30px var(--serif);margin:30px 0 12px}.pillar p{font-size:14px;line-height:1.75;color:#66636a;max-width:320px;margin:0}
+      .insights{background:#eee8de}.insights-head{display:flex;justify-content:space-between;align-items:end;gap:35px}.insights-head h2{max-width:9ch}.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:64px}.insight-card{min-height:260px;padding:28px;border:1px solid #d2c9bd;display:flex;flex-direction:column;justify-content:space-between;background:rgba(251,248,243,.4)}.insight-card .micro{color:var(--laterite)}.insight-card h3{font:400 clamp(1.6rem,2.5vw,2.3rem)/1.08 var(--serif);max-width:12ch;margin:35px 0}.insight-card p{font-size:12px;line-height:1.6;color:#6a6670;margin:0}
+      .founder{display:grid;grid-template-columns:.75fr 1.25fr;gap:8vw;align-items:center}.founder-photo{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 40%;filter:saturate(.88)}.founder-copy h2{max-width:9ch}.founder-copy .lead{margin-top:28px}.founder-copy .founder-role{font-size:10px;text-transform:uppercase;letter-spacing:.25em;color:var(--laterite);margin:30px 0 12px}.founder-copy .founder-name{font:400 24px var(--serif);margin:0}
+      .closing{background:var(--laterite);color:#fff8ef;text-align:center;padding:clamp(80px,12vw,150px) 0}.closing .section-label{color:#f4d5c8}.closing h2{max-width:12ch;margin:0 auto;font-size:clamp(3rem,7vw,7rem)}.closing p{font:400 19px/1.5 var(--serif);max-width:530px;margin:28px auto 34px;color:#f5dfd5}.contact-link{display:inline-flex;align-items:center;gap:18px;border:1px solid rgba(255,255,255,.65);padding:15px 22px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;transition:background .25s,color .25s}.contact-link:hover{background:#fff8ef;color:var(--laterite)}
+      footer{background:var(--ink);color:var(--khadi);padding:30px 0}.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:24px}.footer-brand{font:500 23px var(--serif);letter-spacing:.04em}.footer-brand span{display:block;font:500 9px var(--sans);letter-spacing:.24em;color:#bdb5aa;margin-top:7px}.copyright{font-size:10px;color:#bdb5aa;letter-spacing:.08em}
+      @media(max-width:760px){.wrap{width:calc(100% - 42px)}.hero{min-height:820px}.hero-photo{object-position:60% center}.hero:before{background:linear-gradient(90deg,rgba(13,14,22,.91),rgba(13,14,22,.64) 62%,rgba(13,14,22,.28)),linear-gradient(0deg,rgba(13,14,22,.58),transparent 60%)}.hero-inner{min-height:820px;padding:28px 0 30px}.hero-copy{padding:70px 0 55px}h1{font-size:clamp(4.4rem,17vw,7rem)}.descriptor{font-size:9px;letter-spacing:.17em;margin-bottom:30px}.intro{font-size:1.35rem;max-width:470px}.top-meta{font-size:8px;letter-spacing:.18em}.hero-bottom{align-items:start}.scroll-note{display:none}.vision-grid,.mission-grid,.founder{grid-template-columns:1fr;gap:35px}.vision-copy{padding:0}.section h2{max-width:12ch}.pillars{grid-template-columns:1fr;margin-top:48px}.pillar,.pillar+.pillar{padding:25px 0;border-left:0;border-bottom:1px solid #d9d2c7}.pillar h3{margin:15px 0 8px}.insights-head{display:block}.insight-grid{grid-template-columns:1fr;margin-top:38px}.insight-card{min-height:210px}.founder-photo{aspect-ratio:5/4;order:2}.founder-copy{order:1}.footer-inner{align-items:flex-start;flex-direction:column}.copyright{line-height:1.6}}
+      @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <img class="hero-photo" src="/founder-insight-into-action.webp" alt="Tarvanta founder Lalit Yadav in a thoughtful moment, reviewing ideas on his phone." fetchpriority="high" />
+      <div class="wrap hero-inner">
+        <div class="topline">
+          <a class="brand" href="#top" aria-label="Tarvanta home"><img src="/tarvanta-symbol.svg" alt="" /><span>TARVANTA</span></a>
+          <span class="top-meta">An independent global venture platform</span>
+        </div>
+        <div class="hero-copy" id="top">
+          <p class="eyebrow">A new perspective is taking shape</p>
+          <h1>Insight <span>into action.</span></h1>
+          <p class="descriptor">Strategic thinking &nbsp;|&nbsp; Business storytelling &nbsp;|&nbsp; Meaningful action</p>
+          <p class="intro">We bring together deeper understanding, clear perspectives and entrepreneurial thinking to help shape what comes next.</p>
+        </div>
+        <div class="hero-bottom">
+          <div class="signature">TARVANTA<small>THINK DEEPLY. BUILD THOUGHTFULLY.</small></div>
+          <a class="scroll-note" href="#vision">Discover the thinking &nbsp; ↓</a>
         </div>
       </div>
-    </div>
-
-    <div class="mt-6 h-[34vw] min-h-[13rem] max-h-[30rem] md:mt-4">
-      <Strata animate seed={2} />
-    </div>
-  </section>
-
-  <section class="section pt-[calc(var(--section-space)*0.7)]" aria-labelledby="intro-title">
-    <div class="page-wrap">
-      <Split>
-        <h2 slot="heading" id="intro-title" class="t-heading max-w-[16ch]">
-          Begin with the problem. Earn the right to build.
-        </h2>
-        <div class="prose-body">
-          <p class="t-lede text-charcoal">
-            A promising idea is not yet a business. It becomes one only when the problem is real, the
-            people affected are understood and the proposed answer stands up to evidence.
-          </p>
-          <p>
-            Tarvanta is being developed as a platform for that work: identifying meaningful problems,
-            examining their causes, testing possible responses and connecting the capabilities needed
-            to take a sound idea forward.
-          </p>
-          <p>
-            Sometimes the answer may be a new venture. Sometimes it may be a product, a partnership,
-            a different operating model or a decision not to proceed. The discipline is in finding out
-            which response the evidence supports.
-          </p>
-          <p><a href="/about/" class="link">Why Tarvanta exists</a></p>
-        </div>
-      </Split>
-    </div>
-  </section>
-
-  <section class="section border-y border-stone bg-paper" aria-labelledby="work-title">
-    <div class="page-wrap grid gap-10 md:grid-cols-12 md:items-center md:gap-8">
-      <figure class="md:col-span-6">
-        <img
-          src="https://images.unsplash.com/photo-1764114909312-c27b89ec7223?auto=format&fit=crop&w=1600&q=80"
-          alt="Three workers examining a metal component beside industrial machinery in a Mumbai workshop."
-          width="1600"
-          height="2400"
-          loading="lazy"
-          decoding="async"
-          class="aspect-[4/5] w-full object-cover"
-        />
-        <figcaption class="mt-3 t-small text-graphite">
-          A metalworking workshop in Mumbai. Photograph by
-          <a class="link" href="https://unsplash.com/photos/workers-operating-a-large-industrial-machine-together-V7BRdLkbzpY" target="_blank" rel="noopener noreferrer">Zoshua Colah / Unsplash</a>.
-          Used under the Unsplash License.
-        </figcaption>
-      </figure>
-      <div class="md:col-span-5 md:col-start-8">
-        <p class="t-label">The work begins in the real world</p>
-        <h2 id="work-title" class="t-display mt-5 max-w-[13ch]">
-          A problem is rarely just a headline.
-        </h2>
-        <div class="prose-body mt-7">
-          <p>
-            A business problem may appear as idle capacity, inconsistent quality, delayed fulfilment,
-            pressure on working capital or a customer need that remains poorly served. The visible
-            symptom is only a starting point.
-          </p>
-          <p>
-            The useful questions sit underneath it: what is causing the problem, who experiences it,
-            what has already been tried and what would count as a better outcome?
-          </p>
-          <p>
-            This photograph is an illustrative view of Indian industrial work, not a Tarvanta client
-            site or a representation of a completed project.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-dark bg-charcoal text-ink-on-dark" aria-labelledby="philosophy-title">
-    <div class="page-wrap section">
-      <p class="t-label">How we intend to work</p>
-      <h2 id="philosophy-title" class="t-display mt-8 max-w-[18ch] text-paper">
-        Understand the system before trying to change it.
-      </h2>
-
-      <div class="mt-16 grid gap-10 md:mt-24 md:grid-cols-12 md:gap-8">
-        <div class="md:col-span-4">
-          <h3 class="t-subheading text-paper">Look beneath the symptom</h3>
-          <p class="mt-3 text-ink-on-dark">
-            Separate what is visible from what is driving it. Listen to the people closest to the
-            problem and examine the conditions around it.
-          </p>
-        </div>
-        <div class="md:col-span-4">
-          <h3 class="t-subheading text-paper">Evidence before commitment</h3>
-          <p class="mt-3 text-ink-on-dark">
-            Make the argument explicit, test its assumptions and stay willing to change direction
-            when the evidence points somewhere else.
-          </p>
-        </div>
-        <div class="md:col-span-4">
-          <h3 class="t-subheading text-paper">Build for independence</h3>
-          <p class="mt-3 text-ink-on-dark">
-            Where a venture is justified, give it the focus, identity and customer relationship it
-            needs to stand on its own.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="ecosystem-title">
-    <div class="page-wrap">
-      <Split note="Ventures and initiatives are introduced publicly only when their status and details are ready to be shared.">
-        <h2 slot="heading" id="ecosystem-title" class="t-heading max-w-[16ch]">
-          One platform. Independent futures.
-        </h2>
-        <div class="prose-body">
-          <p>
-            Tarvanta is designed to support ventures without making them look or operate alike.
-            Each business should have its own name, identity, proposition and relationship with
-            customers.
-          </p>
-          <p>
-            The platform provides a shared foundation for research, strategic thinking and disciplined
-            development. The venture earns its place through the problem it solves and the value it
-            creates.
-          </p>
-          <p><a href="/ventures/" class="link">Understand the venture model</a></p>
-        </div>
-      </Split>
-      <div class="mt-16 md:mt-24">
-        <Ecosystem ventures={ventures} />
-      </div>
-    </div>
-  </section>
-
-  <section class="section border-t border-stone" aria-labelledby="approach-title">
-    <div class="page-wrap">
-      <Split sticky>
-        <Fragment slot="heading">
-          <h2 id="approach-title" class="t-heading max-w-[14ch]">A considered route from question to action.</h2>
-          <p class="mt-6 max-w-[34ch] text-graphite">
-            A practical sequence for moving from an initial observation to a decision worth making.
-          </p>
-          <div class="mt-8">
-            <Button href="/approach/" variant="quiet">Explore the approach</Button>
-          </div>
-        </Fragment>
-        <ol class="border-t border-stone">
-          {approach.map((stage, i) => (
-            <li class="grid grid-cols-[2.75rem_1fr] gap-x-4 border-b border-stone py-7 md:grid-cols-[3.5rem_1fr] md:py-9">
-              <span class="font-display text-[1.375rem] leading-tight text-bronze" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <div>
-                <h3 class="t-subheading">
-                  <a href={`/approach/#${stage.slug}`} class="decoration-1 underline-offset-[0.2em] hover:underline">
-                    {stage.title}
-                  </a>
-                </h3>
-                <p class="mt-2 text-graphite">{stage.summary}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </Split>
-    </div>
-  </section>
-
-  <section class="section bg-paper" aria-labelledby="insights-title">
-    <div class="page-wrap">
-      <div class="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="t-label">Research and perspectives</p>
-          <h2 id="insights-title" class="t-heading mt-3">Ideas should withstand scrutiny.</h2>
-          <p class="mt-4 max-w-[46ch] text-graphite">
-            Evidence-led perspectives on business, industry, entrepreneurship and the conditions
-            that shape durable growth.
-          </p>
-        </div>
-        <Button href="/insights/" variant="quiet">All insights</Button>
-      </div>
-      <InsightList entries={insights} />
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="partner-title">
-    <div class="page-wrap">
-      <div class="grid gap-10 md:grid-cols-12 md:gap-8">
-        <h2 id="partner-title" class="t-display md:col-span-8">
-          Have a problem worth understanding properly?
-        </h2>
-        <div class="md:col-span-4 md:self-end">
-          <p class="text-graphite">
-            We welcome considered conversations with founders, operators, specialists and
-            organisations exploring a meaningful problem or opportunity.
-          </p>
-          <div class="mt-8">
-            <Button href="/contact/">Contact {site.name}</Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+    </header>
+    <main>
+      <section class="section" id="vision"><div class="wrap vision-grid"><div><p class="section-label">01 / Our vision</p><h2>A more considered way to build <em>what comes next.</em></h2></div><div class="vision-copy"><p class="lead">We envision a world where ambitious ideas are shaped by deeper insight, thoughtful strategy and meaningful execution.</p><p>We look beyond conventional boundaries — across markets, industries and emerging possibilities — to recognise where understanding can become opportunity.</p><p>Our ambition is not simply to create more businesses. It is to help shape ventures with purpose, relevance and the potential to make a lasting contribution.</p></div></div></section>
+      <section class="section mission" id="mission"><div class="wrap mission-grid"><div><p class="section-label">02 / Our mission</p><h2>Turning understanding into possibility.</h2></div><div class="mission-copy"><p>To explore opportunities, develop informed perspectives and build ventures with long-term relevance.</p><p>Through research, strategic thinking, business storytelling and an entrepreneurial mindset, Tarvanta is being developed as a connected platform for ideas and independent businesses to evolve.</p><div class="mission-note">Insight · Perspective · Venture</div></div></div></section>
+      <section class="section" id="perspective"><div class="wrap"><p class="section-label">03 / How we think</p><h2>Clarity is not a shortcut. It is a <em>discipline.</em></h2><div class="pillars"><article class="pillar"><span class="number">01</span><h3>Insight</h3><p>Look beyond the obvious. Understand the forces, patterns and opportunities shaping markets, industries and people.</p></article><article class="pillar"><span class="number">02</span><h3>Perspective</h3><p>Connect information, experience and independent thinking to form a clearer view of what matters — and why.</p></article><article class="pillar"><span class="number">03</span><h3>Venture</h3><p>Translate informed conviction into purposeful ideas, independent businesses and opportunities worth pursuing.</p></article></div></div></section>
+      <section class="section insights" id="insights"><div class="wrap"><div class="insights-head"><div><p class="section-label">04 / Perspectives</p><h2>Ideas worth looking at <em>closely.</em></h2></div><p class="lead">A growing collection of observations, research and considered perspectives.</p></div><div class="insight-grid"><article class="insight-card"><span class="micro">01 / Global outlook</span><h3>Markets, shifts & emerging opportunity</h3><p>Exploring the signals shaping industries and the possibilities beyond them.</p></article><article class="insight-card"><span class="micro">02 / Strategic thinking</span><h3>From complexity to clarity</h3><p>Making sense of difficult questions, competing priorities and consequential choices.</p></article><article class="insight-card"><span class="micro">03 / Venture thinking</span><h3>Building with intent</h3><p>Ideas, operating principles and the work of turning a meaningful problem into a venture.</p></article></div><p class="micro" style="margin-top:24px;color:#82766b">EDITORIAL SERIES — COMING SOON</p></div></section>
+      <section class="section" id="founder"><div class="wrap founder"><div class="founder-copy"><p class="section-label">05 / The founder's perspective</p><h2>Thoughtful questions. <em>Practical progress.</em></h2><p class="lead">I help leaders make sense of complex challenges and communicate ideas that drive decisions. At Tarvanta, I bring together strategic thinking, visual clarity and a belief in practical solutions that create real impact.</p><p class="founder-role">Founder</p><p class="founder-name">Lalit Yadav</p></div><img class="founder-photo" src="/founder-insight-into-action.webp" alt="Lalit Yadav, founder of Tarvanta." loading="lazy" /></div></section>
+      <section class="closing" id="connect"><div class="wrap"><p class="section-label">The next chapter begins here</p><h2>Something meaningful is taking shape.</h2><p>Tarvanta is preparing to share its perspectives, introduce its ventures and open new conversations. We would be glad to hear from you.</p><a class="contact-link" href="mailto:tarvanta.hq@outlook.com?subject=Hello%20Tarvanta">Start a conversation <span aria-hidden="true">↗</span></a></div></section>
+    </main>
+    <footer><div class="wrap footer-inner"><div class="footer-brand">TARVANTA<span>INSIGHT INTO ACTION.</span></div><div class="copyright">© {new Date().getFullYear()} Tarvanta. All rights reserved.</div></div></footer>
+  </body>
+</html>
