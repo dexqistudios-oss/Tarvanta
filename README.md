@@ -189,3 +189,6 @@ To change the domain, update `SITE_URL` in `astro.config.mjs`, `url` in `src/con
 - **A Fontsource import fails to resolve:** check the package's file list on npm and adjust the import path in `src/layouts/BaseLayout.astro` (the default import `@fontsource-variable/newsreader` always exists).
 - **Type warnings about Vite plugin types:** a known mismatch between Astro's bundled Vite and `@tailwindcss/vite`; it does not affect the build. Keep both packages up to date.
 - **Content collection errors:** the message names the file and field; most often a `summary` outside 40–260 characters or a `topic` not in the list in `src/config/site.ts`.
+
+
+<!-- Cloudflare Pages initial deployment trigger: 2026-10-30 -->
