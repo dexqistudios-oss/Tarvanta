@@ -20,7 +20,7 @@
     "@fontsource-variable/hanken-grotesk": "^5.1.0",
     "@fontsource-variable/newsreader": "^5.1.0",
     "@tailwindcss/vite": "^4.1.0",
-    "astro": "^5.7.0",
+    "astro": "^7.4.4",
     "tailwindcss": "^4.1.0"
   },
   "devDependencies": {
