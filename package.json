@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm audit --json | node scripts/audit-summary.mjs; astro build",
+    "build": "npm audit --json | node scripts/audit-summary.mjs && astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "astro": "astro",
