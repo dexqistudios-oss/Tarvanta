@@ -16,12 +16,11 @@ process.stdin.on('end', () => {
           : { name: entry.name, title: entry.title, url: entry.url, range: entry.range }
       ),
     }));
-    process.stdout.write(JSON.stringify({
-      counts: report.metadata?.vulnerabilities ?? null,
-      advisories: rows,
-    }, null, 2) + '\n');
+    const counts = report.metadata?.vulnerabilities ?? null;
+    process.stdout.write(JSON.stringify({ counts, advisories: rows }, null, 2) + '\\n');
+    if (!counts || counts.total > 0) process.exitCode = 1;
   } catch (error) {
-    process.stderr.write('Unable to parse npm audit output: ' + String(error) + '\n');
-    process.exitCode = 0;
+    process.stderr.write('Unable to parse npm audit output: ' + String(error) + '\\n');
+    process.exitCode = 1;
   }
 });
