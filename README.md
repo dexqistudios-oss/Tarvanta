@@ -137,7 +137,7 @@ All tokens live in the `@theme` block of `src/styles/global.css` and are availab
 
 **Motion.** One orchestrated moment: the hero strata draw in once on load. The header gains a hairline on scroll (CSS scroll-driven animation, no JS). All motion is disabled under `prefers-reduced-motion`.
 
-**Photography.** The brief calls for strong photographic art direction and no generic stock. Rather than use placeholder stock, the site currently uses the generated *Strata* drawing. When commissioned photography is available, add it with Astro's `<Image>` component (see the article cover handling in `pages/insights/[slug].astro`) so it is resized and compressed at build time.
+**Photography.** Use authentic, contextually relevant imagery with a verified source and licence. The homepage currently uses one Unsplash photograph by Zoshua Colah showing a metalworking workshop in Mumbai; its source, attribution and usage notes are recorded in `public/asset-register.md`. The image is explicitly presented as illustrative, not as a Tarvanta client or project. Add future local image assets with Astro's `<Image>` component (see `pages/insights/[slug].astro`) so they are resized and compressed at build time.
 
 ---
 
