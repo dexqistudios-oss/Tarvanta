@@ -15,12 +15,12 @@ const ventures = await getVentures();
 ---
 
 <BaseLayout
-  description="Tarvanta is an insights-led global venture platform that turns well-researched ideas into independent, enduring businesses, each with its own name and identity."
+  description="Tarvanta is an insights-led global venture platform. It brings research, problem-solving and venture development together, with a focus on ideas that can become useful, enduring businesses."
   schema={[organizationSchema(), websiteSchema()]}
 >
-  <!-- Hero ----------------------------------------------------------- -->
   <section aria-labelledby="hero-title" class="relative overflow-hidden">
     <div class="page-wrap pt-14 md:pt-24 lg:pt-28">
+      <p class="t-label mb-7">An insights-led global venture platform</p>
       <h1 id="hero-title" class="t-hero max-w-[11ch] text-charcoal">
         Ideas into enduring ventures.
       </h1>
@@ -28,11 +28,12 @@ const ventures = await getVentures();
       <div class="mt-10 grid gap-8 md:mt-14 md:grid-cols-12">
         <div class="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
           <p class="t-lede text-graphite">
-            Tarvanta is an insights-led global venture platform. We study opportunities closely,
-            then build independent businesses that grow under their own names.
+            Tarvanta brings research, problem-solving and venture development together. The starting
+            point is not a product or a pitch. It is a meaningful problem, understood well enough to
+            decide what should happen next.
           </p>
           <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5">
-            <Button href="/approach/">See how we work</Button>
+            <Button href="/approach/">See how we think</Button>
             <Button href="/contact/" variant="quiet">Start a conversation</Button>
           </div>
         </div>
@@ -44,105 +45,146 @@ const ventures = await getVentures();
     </div>
   </section>
 
-  <!-- Introduction --------------------------------------------------- -->
   <section class="section pt-[calc(var(--section-space)*0.7)]" aria-labelledby="intro-title">
     <div class="page-wrap">
       <Split>
         <h2 slot="heading" id="intro-title" class="t-heading max-w-[16ch]">
-          A platform for building businesses that last.
+          Begin with the problem. Earn the right to build.
         </h2>
         <div class="prose-body">
           <p class="t-lede text-charcoal">
-            Tarvanta exists to do one thing well: take an idea that has been properly understood and
-            give it the structure, patience and independence it needs to become a lasting business.
+            A promising idea is not yet a business. It becomes one only when the problem is real, the
+            people affected are understood and the proposed answer stands up to evidence.
           </p>
           <p>
-            We are not a single company with a single product. Tarvanta is the strategic ground beneath
-            a group of independent ventures. Each one is developed through the platform, then operates
-            under its own name, with its own identity and its own relationship with its customers.
+            Tarvanta is being developed as a platform for that work: identifying meaningful problems,
+            examining their causes, testing possible responses and connecting the capabilities needed
+            to take a sound idea forward.
           </p>
           <p>
-            <a href="/about/" class="link">Read about why Tarvanta exists</a>
+            Sometimes the answer may be a new venture. Sometimes it may be a product, a partnership,
+            a different operating model or a decision not to proceed. The discipline is in finding out
+            which response the evidence supports.
           </p>
+          <p><a href="/about/" class="link">Why Tarvanta exists</a></p>
         </div>
       </Split>
     </div>
   </section>
 
-  <!-- Philosophy (dark) ---------------------------------------------- -->
-  <section class="on-dark bg-charcoal text-ink-on-dark" aria-labelledby="philosophy-title">
-    <div class="page-wrap section">
-      <h2 id="philosophy-title" class="t-label">Strategic philosophy</h2>
-      <p class="t-display mt-8 max-w-[20ch] text-paper">
-        Understand first. Build second. Stay for the long term.
-      </p>
-
-      <div class="mt-16 grid gap-10 md:mt-24 md:grid-cols-12 md:gap-8">
-        <div class="md:col-span-4">
-          <h3 class="t-subheading text-paper">Insight leads</h3>
-          <p class="mt-3 text-ink-on-dark">
-            Every venture starts as a written point of view about a real problem, tested against evidence
-            before anything is built.
+  <section class="section border-y border-stone bg-paper" aria-labelledby="work-title">
+    <div class="page-wrap grid gap-10 md:grid-cols-12 md:items-center md:gap-8">
+      <figure class="md:col-span-6">
+        <img
+          src="https://images.unsplash.com/photo-1764114909312-c27b89ec7223?auto=format&fit=crop&w=1600&q=80"
+          alt="Three workers examining a metal component beside industrial machinery in a Mumbai workshop."
+          width="1600"
+          height="2400"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/5] w-full object-cover"
+        />
+        <figcaption class="mt-3 t-small text-graphite">
+          A metalworking workshop in Mumbai. Photograph by
+          <a class="link" href="https://unsplash.com/photos/workers-operating-a-large-industrial-machine-together-V7BRdLkbzpY" target="_blank" rel="noopener noreferrer">Zoshua Colah / Unsplash</a>.
+          Used under the Unsplash License.
+        </figcaption>
+      </figure>
+      <div class="md:col-span-5 md:col-start-8">
+        <p class="t-label">The work begins in the real world</p>
+        <h2 id="work-title" class="t-display mt-5 max-w-[13ch]">
+          A problem is rarely just a headline.
+        </h2>
+        <div class="prose-body mt-7">
+          <p>
+            A business problem may appear as idle capacity, inconsistent quality, delayed fulfilment,
+            pressure on working capital or a customer need that remains poorly served. The visible
+            symptom is only a starting point.
           </p>
-        </div>
-        <div class="md:col-span-4">
-          <h3 class="t-subheading text-paper">Ventures stand alone</h3>
-          <p class="mt-3 text-ink-on-dark">
-            Businesses keep their own names and brands. The platform strengthens them without asking
-            them to look alike.
+          <p>
+            The useful questions sit underneath it: what is causing the problem, who experiences it,
+            what has already been tried and what would count as a better outcome?
           </p>
-        </div>
-        <div class="md:col-span-4">
-          <h3 class="t-subheading text-paper">Time is an asset</h3>
-          <p class="mt-3 text-ink-on-dark">
-            We measure progress in years and favour decisions that compound over ones that merely
-            accelerate.
+          <p>
+            This photograph is an illustrative view of Indian industrial work, not a Tarvanta client
+            site or a representation of a completed project.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Venture ecosystem ---------------------------------------------- -->
+  <section class="on-dark bg-charcoal text-ink-on-dark" aria-labelledby="philosophy-title">
+    <div class="page-wrap section">
+      <p class="t-label">How we intend to work</p>
+      <h2 id="philosophy-title" class="t-display mt-8 max-w-[18ch] text-paper">
+        Understand the system before trying to change it.
+      </h2>
+
+      <div class="mt-16 grid gap-10 md:mt-24 md:grid-cols-12 md:gap-8">
+        <div class="md:col-span-4">
+          <h3 class="t-subheading text-paper">Look beneath the symptom</h3>
+          <p class="mt-3 text-ink-on-dark">
+            Separate what is visible from what is driving it. Listen to the people closest to the
+            problem and examine the conditions around it.
+          </p>
+        </div>
+        <div class="md:col-span-4">
+          <h3 class="t-subheading text-paper">Evidence before commitment</h3>
+          <p class="mt-3 text-ink-on-dark">
+            Make the argument explicit, test its assumptions and stay willing to change direction
+            when the evidence points somewhere else.
+          </p>
+        </div>
+        <div class="md:col-span-4">
+          <h3 class="t-subheading text-paper">Build for independence</h3>
+          <p class="mt-3 text-ink-on-dark">
+            Where a venture is justified, give it the focus, identity and customer relationship it
+            needs to stand on its own.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section" aria-labelledby="ecosystem-title">
     <div class="page-wrap">
-      <Split note="Ventures are introduced on this site only when they are ready to be public.">
+      <Split note="Ventures and initiatives are introduced publicly only when their status and details are ready to be shared.">
         <h2 slot="heading" id="ecosystem-title" class="t-heading max-w-[16ch]">
-          Many names, one foundation.
+          One platform. Independent futures.
         </h2>
         <div class="prose-body">
           <p>
-            Ventures developed through Tarvanta are independent by design. Each has its own name,
-            brand, website and social presence, chosen to suit its customers and its market.
+            Tarvanta is designed to support ventures without making them look or operate alike.
+            Each business should have its own name, identity, proposition and relationship with
+            customers.
           </p>
           <p>
-            Beneath them sits Tarvanta: the research, strategic thinking and operating discipline they
-            share, and a commitment that does not change with the next funding cycle.
+            The platform provides a shared foundation for research, strategic thinking and disciplined
+            development. The venture earns its place through the problem it solves and the value it
+            creates.
           </p>
-          <p><a href="/ventures/" class="link">Explore the ventures ecosystem</a></p>
+          <p><a href="/ventures/" class="link">Understand the venture model</a></p>
         </div>
       </Split>
-
       <div class="mt-16 md:mt-24">
         <Ecosystem ventures={ventures} />
       </div>
     </div>
   </section>
 
-  <!-- Approach overview ---------------------------------------------- -->
   <section class="section border-t border-stone" aria-labelledby="approach-title">
     <div class="page-wrap">
       <Split sticky>
         <Fragment slot="heading">
-          <h2 id="approach-title" class="t-heading max-w-[14ch]">Our approach, in five stages.</h2>
+          <h2 id="approach-title" class="t-heading max-w-[14ch]">A considered route from question to action.</h2>
           <p class="mt-6 max-w-[34ch] text-graphite">
-            A deliberate sequence from first observation to an independent business with a long future.
+            A practical sequence for moving from an initial observation to a decision worth making.
           </p>
           <div class="mt-8">
-            <Button href="/approach/" variant="quiet">Read the full approach</Button>
+            <Button href="/approach/" variant="quiet">Explore the approach</Button>
           </div>
         </Fragment>
-
         <ol class="border-t border-stone">
           {approach.map((stage, i) => (
             <li class="grid grid-cols-[2.75rem_1fr] gap-x-4 border-b border-stone py-7 md:grid-cols-[3.5rem_1fr] md:py-9">
@@ -164,14 +206,15 @@ const ventures = await getVentures();
     </div>
   </section>
 
-  <!-- Selected insights ---------------------------------------------- -->
   <section class="section bg-paper" aria-labelledby="insights-title">
     <div class="page-wrap">
       <div class="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
         <div>
-          <h2 id="insights-title" class="t-heading">Insights</h2>
+          <p class="t-label">Research and perspectives</p>
+          <h2 id="insights-title" class="t-heading mt-3">Ideas should withstand scrutiny.</h2>
           <p class="mt-4 max-w-[46ch] text-graphite">
-            Perspectives on strategy, entrepreneurship and the opportunities shaping global markets.
+            Evidence-led perspectives on business, industry, entrepreneurship and the conditions
+            that shape durable growth.
           </p>
         </div>
         <Button href="/insights/" variant="quiet">All insights</Button>
@@ -180,17 +223,16 @@ const ventures = await getVentures();
     </div>
   </section>
 
-  <!-- Partnership invitation ----------------------------------------- -->
   <section class="section" aria-labelledby="partner-title">
     <div class="page-wrap">
       <div class="grid gap-10 md:grid-cols-12 md:gap-8">
         <h2 id="partner-title" class="t-display md:col-span-8">
-          Building something that should last? Let’s talk.
+          Have a problem worth understanding properly?
         </h2>
         <div class="md:col-span-4 md:self-end">
           <p class="text-graphite">
-            We welcome conversations with founders, operators, specialists and organisations who share a
-            long-term view.
+            We welcome considered conversations with founders, operators, specialists and
+            organisations exploring a meaningful problem or opportunity.
           </p>
           <div class="mt-8">
             <Button href="/contact/">Contact {site.name}</Button>

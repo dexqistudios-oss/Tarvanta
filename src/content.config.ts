@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 import { insightTopics } from './config/site';
 
@@ -40,7 +41,7 @@ const ventures = defineCollection({
     sector: z.string(),
     stage: z.enum(['In development', 'Launched', 'Operating']),
     /** The venture's own website. Opened in a new tab with rel="noopener noreferrer". */
-    website: z.string().url().optional(),
+    website: z.url().optional(),
     /** Display order on the Ventures page (lower first). */
     order: z.number().default(100),
     draft: z.boolean().default(false),

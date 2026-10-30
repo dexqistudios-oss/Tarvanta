@@ -9,17 +9,18 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm audit --json | node scripts/audit-summary.mjs && astro check && astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "audit:summary": "npm audit --json | node scripts/audit-summary.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.0",
     "@fontsource-variable/hanken-grotesk": "^5.1.0",
     "@fontsource-variable/newsreader": "^5.1.0",
     "@tailwindcss/vite": "^4.1.0",
-    "astro": "^5.7.0",
+    "astro": "^7.4.4",
     "tailwindcss": "^4.1.0"
   },
   "devDependencies": {
