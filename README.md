@@ -192,3 +192,6 @@ To change the domain, update `SITE_URL` in `astro.config.mjs`, `url` in `src/con
 
 
 <!-- Cloudflare Pages initial deployment trigger: 2026-10-30 -->
+
+
+<!-- Cloudflare Pages deployment trigger: retry 2 -->
