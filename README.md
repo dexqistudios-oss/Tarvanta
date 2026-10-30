@@ -2,7 +2,7 @@
 
 Source for **tarvanta.in**, the website of Tarvanta, an insights-led global venture platform.
 
-Built with Astro 5, TypeScript and Tailwind CSS 4. Static output, no client framework, about 1 KB of JavaScript (the mobile menu). Deployed to Cloudflare Pages from GitHub.
+Built with Astro 7, TypeScript and Tailwind CSS 4. Static output, no client framework, about 1 KB of JavaScript (the mobile menu). Deployed to Cloudflare Pages from GitHub.
 
 ---
 
@@ -13,12 +13,10 @@ Requirements: Node.js 20.3 or later (22 recommended, see `.nvmrc`) and npm.
 ```bash
 npm install        # install dependencies
 npm run dev        # local development at http://localhost:4321
-npm run build      # production build into ./dist
+npm run build      # blocks on npm audit + Astro type checks, then builds ./dist
 npm run preview    # serve the production build locally
 npm run check      # type-check .astro and .ts files
 ```
-
-> **First build:** this project was written in an environment without access to the npm registry, so `npm install` and `npm run build` have not yet been run on it. Run both once locally and commit the generated `package-lock.json`. If anything fails, the error will point to the file; see *Troubleshooting* below.
 
 ---
 
@@ -70,7 +68,7 @@ src/
 
 ### Placeholders, and why you won't see invented content
 
-Nothing on the site is invented: no clients, partners, figures, people, ventures or articles. Where information is still to come:
+No clients, partners, figures, people, ventures, testimonials or operating results are invented. Published insights must distinguish cited evidence from Tarvanta's own analysis. Where information is still to come:
 
 - **In development** (`npm run dev`), a dashed box marked *Placeholder (development only)* shows exactly what is missing and where to add it.
 - **In production**, those boxes render nothing, and the page shows an honest holding line instead (for example, "Ventures are listed here once they are ready to be introduced publicly").
@@ -174,8 +172,9 @@ To change the domain, update `SITE_URL` in `astro.config.mjs`, `url` in `src/con
 
 ## Quality checklist before launch
 
-- [ ] `npm install && npm run build` completes without errors; commit `package-lock.json`.
-- [ ] `npm run check` reports no type errors.
+- [x] Cloudflare preview install/build completed; npm audit reported zero vulnerabilities.
+- [x] The build pipeline now blocks on npm audit findings and `astro check` before static generation.
+- [ ] Re-run the preview deployment and confirm the new blocking checks pass.
 - [ ] Contact routes in `src/config/site.ts` filled in, or a form endpoint configured.
 - [ ] `npm run preview`: visit every page at mobile (375px) and desktop widths; tab through each page with the keyboard.
 - [ ] Browser console is clean on every page.
@@ -191,7 +190,3 @@ To change the domain, update `SITE_URL` in `astro.config.mjs`, `url` in `src/con
 - **Content collection errors:** the message names the file and field; most often a `summary` outside 40–260 characters or a `topic` not in the list in `src/config/site.ts`.
 
 
-<!-- Cloudflare Pages initial deployment trigger: 2026-10-30 -->
-
-
-<!-- Cloudflare Pages deployment trigger: retry 2 -->
