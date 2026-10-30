@@ -1,0 +1,107 @@
+---
+/**
+ * Ecosystem diagram, built in HTML so it is readable by assistive technology
+ * and reflows on small screens.
+ *
+ * Top: independent ventures, each with its own name and identity.
+ * Bottom: Tarvanta, the shared ground they grow from.
+ *
+ * Pass real ventures to fill the slots; unfilled slots show what each
+ * venture keeps for itself. Nothing is invented.
+ */
+import type { CollectionEntry } from 'astro:content';
+import ExternalLink from '@/components/ui/ExternalLink.astro';
+
+export interface Props {
+  ventures?: CollectionEntry<'ventures'>[];
+  /** Total slots to show (ventures plus open slots). */
+  slots?: number;
+  tone?: 'light' | 'dark';
+}
+
+const { ventures = [], slots = 3, tone = 'light' } = Astro.props;
+const openSlots = Math.max(0, slots - ventures.length);
+const keeps = ['Its own name', 'Its own brand identity', 'Its own website', 'Its own social channels'];
+const dark = tone === 'dark';
+---
+
+<figure class="eco" aria-labelledby="eco-caption">
+  <ul
+    class:list={['grid gap-4 sm:grid-cols-2 lg:gap-5', slots >= 3 && 'lg:grid-cols-3']}
+    aria-label="Independent ventures"
+  >
+    {ventures.map((v) => (
+      <li class:list={['eco-slot relative flex flex-col border p-6 pt-7', dark ? 'border-ink-on-dark/40' : 'border-charcoal/70']}>
+        <p class={dark ? 't-small text-muted-on-dark' : 't-small text-graphite'}>{v.data.sector}</p>
+        <h3 class="t-subheading mt-3">{v.data.name}</h3>
+        <p class={dark ? 'mt-3 text-ink-on-dark' : 'mt-3 text-graphite'}>{v.data.description}</p>
+        <p class={dark ? 'mt-4 t-small text-muted-on-dark' : 'mt-4 t-small text-graphite'}>{v.data.stage}</p>
+        {v.data.website && (
+          <p class="mt-auto pt-6">
+            <ExternalLink href={v.data.website} class="link">Visit {v.data.name}</ExternalLink>
+          </p>
+        )}
+      </li>
+    ))}
+
+    {Array.from({ length: openSlots }).map((_, i) => (
+      <li
+        class:list={[
+          'eco-slot relative border border-dashed p-6 pt-7',
+          dark ? 'border-ink-on-dark/35' : 'border-charcoal/45',
+          i > 0 && 'hidden sm:block',
+          i > 1 && 'sm:hidden lg:block',
+        ]}
+      >
+        <p class:list={['font-display text-[1.375rem] leading-tight', dark ? 'text-paper' : 'text-charcoal']}>
+          An independent venture
+        </p>
+        <ul class:list={['mt-5 space-y-1.5 t-small', dark ? 'text-muted-on-dark' : 'text-graphite']}>
+          {keeps.map((k) => <li>{k}</li>)}
+        </ul>
+      </li>
+    ))}
+  </ul>
+
+  <!-- Connecting stems: visual only -->
+  <div class="eco-stems" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+
+  <div class:list={['eco-ground px-6 py-7 md:px-8', dark ? 'bg-ink-on-dark text-charcoal' : 'bg-charcoal text-paper']}>
+    <div class="flex flex-col gap-4 md:flex-row md:items-baseline md:justify-between md:gap-10">
+      <p class="font-display text-[1.75rem] leading-none" style="font-weight: 420;">Tarvanta</p>
+      <p class:list={['max-w-[46ch] t-small md:text-right', dark ? 'text-charcoal/80' : 'text-ink-on-dark']}>
+        Shared ground: insight, strategy, operating discipline and long-term commitment.
+      </p>
+    </div>
+  </div>
+
+  <figcaption id="eco-caption" class="sr-only">
+    Diagram: independent ventures, each with its own name, identity, website and channels, sit on
+    Tarvanta, which provides insight, strategy, operating discipline and long-term commitment.
+  </figcaption>
+</figure>
+
+<style>
+  .eco-stems {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    height: 2.5rem;
+  }
+  .eco-stems span {
+    justify-self: center;
+    width: 1px;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .eco-stems span:nth-child(n + 2) { display: none; }
+  @media (min-width: 40rem) {
+    .eco-stems { grid-template-columns: repeat(2, 1fr); }
+    .eco-stems span:nth-child(2) { display: block; }
+  }
+  @media (min-width: 64rem) {
+    .eco-stems { grid-template-columns: repeat(3, 1fr); }
+    .eco-stems span:nth-child(3) { display: block; }
+  }
+</style>

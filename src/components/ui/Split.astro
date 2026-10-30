@@ -1,0 +1,31 @@
+---
+/**
+ * The site's core asymmetric composition: a heading held in the left five
+ * columns, body content in the right six. Stacks on small screens.
+ *
+ * Slots: `heading` (or use the `heading` prop), default (body).
+ */
+export interface Props {
+  heading?: string;
+  /** Heading level — keeps the outline correct on each page. */
+  as?: 'h2' | 'h3';
+  /** Optional quiet note shown under the heading (sentence case). */
+  note?: string;
+  /** Pin the heading while the body scrolls on large screens. */
+  sticky?: boolean;
+  id?: string;
+  class?: string;
+}
+const { heading, as: Tag = 'h2', note, sticky = false, id, class: className = '' } = Astro.props;
+---
+
+<div id={id} class:list={['grid gap-8 md:grid-cols-12 md:gap-x-8', className]}>
+  <div class:list={['md:col-span-5', sticky && 'md:sticky md:top-28 md:self-start']}>
+    {heading && <Tag class="t-heading max-w-[18ch]">{heading}</Tag>}
+    <slot name="heading" />
+    {note && <p class="t-label mt-5 max-w-[30ch] font-normal">{note}</p>}
+  </div>
+  <div class="md:col-span-6 md:col-start-7">
+    <slot />
+  </div>
+</div>

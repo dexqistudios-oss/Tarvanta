@@ -1,0 +1,76 @@
+---
+import { site, navigation } from '@/config/site';
+import Wordmark from '@/components/ui/Wordmark.astro';
+import ExternalLink from '@/components/ui/ExternalLink.astro';
+
+const year = new Date().getFullYear();
+const generalEmail =
+  site.contact.routes.find((r) => r.label === 'General correspondence')?.email ||
+  site.contact.routes.find((r) => r.email)?.email ||
+  '';
+---
+
+<footer class="on-dark mt-auto bg-charcoal text-ink-on-dark">
+  <div class="page-wrap pb-10 pt-20 md:pt-28">
+    <div class="grid gap-14 md:grid-cols-12 md:gap-8">
+      <div class="md:col-span-5">
+        <p class="t-display text-paper">{site.tagline}</p>
+        <p class="mt-6 max-w-sm text-muted-on-dark">
+          {site.positioning} Each venture keeps its own name and identity.
+        </p>
+      </div>
+
+      <nav aria-label="Footer" class="md:col-span-3 md:col-start-7">
+        <h2 class="t-label">Explore</h2>
+        <ul class="mt-4 space-y-2.5">
+          <li><a href="/" class="footer-link">Home</a></li>
+          {navigation.map((item) => (
+            <li><a href={item.href} class="footer-link">{item.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="md:col-span-3 md:col-start-10">
+        <h2 class="t-label">Correspond</h2>
+        <ul class="mt-4 space-y-2.5">
+          {generalEmail ? (
+            <li><a href={`mailto:${generalEmail}`} class="footer-link break-all">{generalEmail}</a></li>
+          ) : (
+            <li><a href="/contact/" class="footer-link">Contact routes</a></li>
+          )}
+          {site.social.map((profile) => (
+            <li>
+              <ExternalLink href={profile.url} class="footer-link">{profile.label}</ExternalLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <hr class="rule mt-20 md:mt-28" />
+
+    <div class="mt-8 flex flex-col gap-6 text-[0.875rem] text-muted-on-dark md:flex-row md:items-center md:justify-between">
+      <a href="/" class="text-ink-on-dark" aria-label="Tarvanta, home"><Wordmark /></a>
+      <p>
+        © {year} {site.legal.entityName || site.name}.
+        {site.legal.registration && <span> {site.legal.registration}.</span>}
+        {' '}Ventures named on this site are independent businesses.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-link {
+    color: var(--color-ink-on-dark);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 160ms var(--ease-calm), color 160ms var(--ease-calm);
+  }
+  .footer-link:hover {
+    color: var(--color-paper);
+    text-decoration-color: var(--color-bronze-light);
+  }
+</style>

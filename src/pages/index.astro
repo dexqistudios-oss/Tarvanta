@@ -1,0 +1,202 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Strata from '@/components/art/Strata.astro';
+import Split from '@/components/ui/Split.astro';
+import Button from '@/components/ui/Button.astro';
+import Ecosystem from '@/components/sections/Ecosystem.astro';
+import InsightList from '@/components/sections/InsightList.astro';
+import { organizationSchema, websiteSchema } from '@/components/seo/schema';
+import { approach } from '@/data/approach';
+import { site } from '@/config/site';
+import { getInsights, getVentures } from '@/lib/content';
+
+const insights = (await getInsights()).slice(0, 3);
+const ventures = await getVentures();
+---
+
+<BaseLayout
+  description="Tarvanta is an insights-led global venture platform that turns well-researched ideas into independent, enduring businesses, each with its own name and identity."
+  schema={[organizationSchema(), websiteSchema()]}
+>
+  <!-- Hero ----------------------------------------------------------- -->
+  <section aria-labelledby="hero-title" class="relative overflow-hidden">
+    <div class="page-wrap pt-14 md:pt-24 lg:pt-28">
+      <h1 id="hero-title" class="t-hero max-w-[11ch] text-charcoal">
+        Ideas into enduring ventures.
+      </h1>
+
+      <div class="mt-10 grid gap-8 md:mt-14 md:grid-cols-12">
+        <div class="md:col-span-6 md:col-start-7 lg:col-span-5 lg:col-start-8">
+          <p class="t-lede text-graphite">
+            Tarvanta is an insights-led global venture platform. We study opportunities closely,
+            then build independent businesses that grow under their own names.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-5">
+            <Button href="/approach/">See how we work</Button>
+            <Button href="/contact/" variant="quiet">Start a conversation</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 h-[34vw] min-h-[13rem] max-h-[30rem] md:mt-4">
+      <Strata animate seed={2} />
+    </div>
+  </section>
+
+  <!-- Introduction --------------------------------------------------- -->
+  <section class="section pt-[calc(var(--section-space)*0.7)]" aria-labelledby="intro-title">
+    <div class="page-wrap">
+      <Split>
+        <h2 slot="heading" id="intro-title" class="t-heading max-w-[16ch]">
+          A platform for building businesses that last.
+        </h2>
+        <div class="prose-body">
+          <p class="t-lede text-charcoal">
+            Tarvanta exists to do one thing well: take an idea that has been properly understood and
+            give it the structure, patience and independence it needs to become a lasting business.
+          </p>
+          <p>
+            We are not a single company with a single product. Tarvanta is the strategic ground beneath
+            a group of independent ventures. Each one is developed through the platform, then operates
+            under its own name, with its own identity and its own relationship with its customers.
+          </p>
+          <p>
+            <a href="/about/" class="link">Read about why Tarvanta exists</a>
+          </p>
+        </div>
+      </Split>
+    </div>
+  </section>
+
+  <!-- Philosophy (dark) ---------------------------------------------- -->
+  <section class="on-dark bg-charcoal text-ink-on-dark" aria-labelledby="philosophy-title">
+    <div class="page-wrap section">
+      <h2 id="philosophy-title" class="t-label">Strategic philosophy</h2>
+      <p class="t-display mt-8 max-w-[20ch] text-paper">
+        Understand first. Build second. Stay for the long term.
+      </p>
+
+      <div class="mt-16 grid gap-10 md:mt-24 md:grid-cols-12 md:gap-8">
+        <div class="md:col-span-4">
+          <h3 class="t-subheading text-paper">Insight leads</h3>
+          <p class="mt-3 text-ink-on-dark">
+            Every venture starts as a written point of view about a real problem, tested against evidence
+            before anything is built.
+          </p>
+        </div>
+        <div class="md:col-span-4">
+          <h3 class="t-subheading text-paper">Ventures stand alone</h3>
+          <p class="mt-3 text-ink-on-dark">
+            Businesses keep their own names and brands. The platform strengthens them without asking
+            them to look alike.
+          </p>
+        </div>
+        <div class="md:col-span-4">
+          <h3 class="t-subheading text-paper">Time is an asset</h3>
+          <p class="mt-3 text-ink-on-dark">
+            We measure progress in years and favour decisions that compound over ones that merely
+            accelerate.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Venture ecosystem ---------------------------------------------- -->
+  <section class="section" aria-labelledby="ecosystem-title">
+    <div class="page-wrap">
+      <Split note="Ventures are introduced on this site only when they are ready to be public.">
+        <h2 slot="heading" id="ecosystem-title" class="t-heading max-w-[16ch]">
+          Many names, one foundation.
+        </h2>
+        <div class="prose-body">
+          <p>
+            Ventures developed through Tarvanta are independent by design. Each has its own name,
+            brand, website and social presence, chosen to suit its customers and its market.
+          </p>
+          <p>
+            Beneath them sits Tarvanta: the research, strategic thinking and operating discipline they
+            share, and a commitment that does not change with the next funding cycle.
+          </p>
+          <p><a href="/ventures/" class="link">Explore the ventures ecosystem</a></p>
+        </div>
+      </Split>
+
+      <div class="mt-16 md:mt-24">
+        <Ecosystem ventures={ventures} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach overview ---------------------------------------------- -->
+  <section class="section border-t border-stone" aria-labelledby="approach-title">
+    <div class="page-wrap">
+      <Split sticky>
+        <Fragment slot="heading">
+          <h2 id="approach-title" class="t-heading max-w-[14ch]">Our approach, in five stages.</h2>
+          <p class="mt-6 max-w-[34ch] text-graphite">
+            A deliberate sequence from first observation to an independent business with a long future.
+          </p>
+          <div class="mt-8">
+            <Button href="/approach/" variant="quiet">Read the full approach</Button>
+          </div>
+        </Fragment>
+
+        <ol class="border-t border-stone">
+          {approach.map((stage, i) => (
+            <li class="grid grid-cols-[2.75rem_1fr] gap-x-4 border-b border-stone py-7 md:grid-cols-[3.5rem_1fr] md:py-9">
+              <span class="font-display text-[1.375rem] leading-tight text-bronze" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3 class="t-subheading">
+                  <a href={`/approach/#${stage.slug}`} class="decoration-1 underline-offset-[0.2em] hover:underline">
+                    {stage.title}
+                  </a>
+                </h3>
+                <p class="mt-2 text-graphite">{stage.summary}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Split>
+    </div>
+  </section>
+
+  <!-- Selected insights ---------------------------------------------- -->
+  <section class="section bg-paper" aria-labelledby="insights-title">
+    <div class="page-wrap">
+      <div class="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 id="insights-title" class="t-heading">Insights</h2>
+          <p class="mt-4 max-w-[46ch] text-graphite">
+            Perspectives on strategy, entrepreneurship and the opportunities shaping global markets.
+          </p>
+        </div>
+        <Button href="/insights/" variant="quiet">All insights</Button>
+      </div>
+      <InsightList entries={insights} />
+    </div>
+  </section>
+
+  <!-- Partnership invitation ----------------------------------------- -->
+  <section class="section" aria-labelledby="partner-title">
+    <div class="page-wrap">
+      <div class="grid gap-10 md:grid-cols-12 md:gap-8">
+        <h2 id="partner-title" class="t-display md:col-span-8">
+          Building something that should last? Let’s talk.
+        </h2>
+        <div class="md:col-span-4 md:self-end">
+          <p class="text-graphite">
+            We welcome conversations with founders, operators, specialists and organisations who share a
+            long-term view.
+          </p>
+          <div class="mt-8">
+            <Button href="/contact/">Contact {site.name}</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

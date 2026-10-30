@@ -1,0 +1,89 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import Button from '@/components/ui/Button.astro';
+import { breadcrumbSchema } from '@/components/seo/schema';
+import { approach } from '@/data/approach';
+---
+
+<BaseLayout
+  title="Our approach"
+  description="How Tarvanta works: identifying opportunities, developing strategic perspectives, validating ideas, building independent ventures and creating long-term value."
+  schema={breadcrumbSchema([{ name: 'Our approach', path: '/approach/' }])}
+>
+  <PageHero
+    page="Our approach"
+    statement="From first observation to an enduring business."
+    lede="Our approach is a sequence of five stages. Each one has a clear question to answer before the next begins. It is how Tarvanta intends to work, set out plainly, rather than a record of results."
+  />
+
+  <!-- Stage index -->
+  <nav aria-label="Stages" class="page-wrap">
+    <ol class="grid border-y border-stone sm:grid-cols-5">
+      {approach.map((stage, i) => (
+        <li class="border-b border-stone last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+          <a
+            href={`#${stage.slug}`}
+            class="flex h-full gap-3 px-1 py-4 text-[0.9375rem] leading-snug text-charcoal transition-colors hover:bg-paper hover:text-olive sm:flex-col sm:gap-2 sm:px-4 sm:py-5"
+          >
+            <span class="font-display text-bronze" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span>{stage.title}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+
+  <!-- Stages -->
+  <div class="page-wrap">
+    {approach.map((stage, i) => (
+      <section
+        id={stage.slug}
+        aria-labelledby={`${stage.slug}-title`}
+        class="grid gap-8 border-b border-stone py-20 last:border-b-0 md:grid-cols-12 md:gap-x-8 md:py-28"
+      >
+        <div class="md:col-span-5">
+          <p class="font-display text-[clamp(4rem,9vw,7.5rem)] leading-[0.85] text-bronze" style="font-weight: 300;" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </p>
+          <h2 id={`${stage.slug}-title`} class="t-heading mt-6 max-w-[14ch]">
+            <span class="sr-only">Stage {i + 1}: </span>{stage.title}
+          </h2>
+        </div>
+
+        <div class="md:col-span-6 md:col-start-7">
+          <p class="t-lede text-charcoal">{stage.summary}</p>
+          <div class="prose-body mt-8">
+            {stage.body.map((para) => <p>{para}</p>)}
+          </div>
+
+          <div class="mt-10 border-l-2 border-bronze bg-paper px-6 py-6">
+            <h3 class="t-label text-charcoal">Questions this stage answers</h3>
+            <ul class="mt-4 space-y-2.5">
+              {stage.questions.map((q) => (
+                <li class="font-display text-[1.1875rem] leading-snug">{q}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <!-- Close -->
+  <section class="on-dark bg-charcoal text-ink-on-dark" aria-labelledby="approach-next-title">
+    <div class="page-wrap section grid gap-10 md:grid-cols-12 md:gap-8">
+      <h2 id="approach-next-title" class="t-display text-paper md:col-span-7">
+        The approach is the same. The ventures are not.
+      </h2>
+      <div class="md:col-span-4 md:col-start-9 md:self-end">
+        <p class="text-ink-on-dark">
+          Each business that comes through this process leaves it with its own name and identity.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-x-8 gap-y-5">
+          <Button href="/ventures/" variant="solid-light">Explore ventures</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

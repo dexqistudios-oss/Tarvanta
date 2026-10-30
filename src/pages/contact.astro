@@ -1,0 +1,197 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+import { breadcrumbSchema } from '@/components/seo/schema';
+import { site } from '@/config/site';
+
+const { routes, formEndpoint, address, phone } = site.contact;
+const hasEmail = routes.some((r) => r.email);
+const hasForm = Boolean(formEndpoint);
+const hasAnyChannel = hasEmail || hasForm || Boolean(phone);
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact Tarvanta about strategic partnerships, business enquiries, collaboration opportunities or general correspondence."
+  schema={breadcrumbSchema([{ name: 'Contact', path: '/contact/' }])}
+>
+  <PageHero
+    page="Contact"
+    statement="Start a considered conversation."
+    lede="Tell us briefly who you are and what you have in mind. Every message is read, and we reply when there is a clear reason to continue the conversation."
+  />
+
+  <section class="page-wrap pb-[var(--section-space)]" aria-labelledby="routes-title">
+    <div class="grid gap-16 md:grid-cols-12 md:gap-8">
+      <!-- Routes -->
+      <div class:list={[hasForm ? 'md:col-span-5' : 'md:col-span-12']}>
+        <h2 id="routes-title" class="t-heading">How to reach us</h2>
+
+        <ul class:list={['mt-10 border-t border-stone', !hasForm && 'grid sm:grid-cols-2 sm:gap-x-10']}>
+          {routes.map((route) => (
+            <li class="border-b border-stone py-7">
+              <h3 class="t-subheading">{route.label}</h3>
+              <p class="mt-2 text-graphite">{route.description}</p>
+              {route.email ? (
+                <p class="mt-3">
+                  <a href={`mailto:${route.email}`} class="link break-all">{route.email}</a>
+                </p>
+              ) : (
+                <Placeholder class="mt-3" note={`Add an email for “${route.label}” in src/config/site.ts.`} />
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {(phone || address.length > 0) && (
+          <dl class="mt-10 grid gap-6 sm:grid-cols-2">
+            {phone && (
+              <div>
+                <dt class="t-label">Telephone</dt>
+                <dd class="mt-1"><a href={`tel:${phone.replace(/\s+/g, '')}`} class="link">{phone}</a></dd>
+              </div>
+            )}
+            {address.length > 0 && (
+              <div>
+                <dt class="t-label">Address</dt>
+                <dd class="mt-1 not-italic">
+                  <address class="not-italic">
+                    {address.map((line) => <span class="block">{line}</span>)}
+                  </address>
+                </dd>
+              </div>
+            )}
+          </dl>
+        )}
+
+        {!hasAnyChannel && (
+          <p class="mt-10 max-w-[52ch] text-graphite">
+            Direct contact details will be published here shortly.
+          </p>
+        )}
+        <Placeholder
+          class="mt-6"
+          note="To show an enquiry form, set contact.formEndpoint in src/config/site.ts to a service that accepts form POSTs (see README)."
+        />
+      </div>
+
+      <!-- Form (only when an endpoint is configured) -->
+      {hasForm && (
+        <div class="md:col-span-6 md:col-start-7">
+          <h2 class="t-heading" id="form-title">Send a message</h2>
+          <p class="mt-4 text-graphite">All fields are required unless marked optional.</p>
+
+          <form
+            action={formEndpoint}
+            method="post"
+            class="mt-10 space-y-7"
+            aria-labelledby="form-title"
+          >
+            <div class="grid gap-7 sm:grid-cols-2">
+              <div>
+                <label for="name" class="field-label">Name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required class="field" />
+              </div>
+              <div>
+                <label for="email" class="field-label">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required class="field" />
+              </div>
+            </div>
+
+            <div>
+              <label for="organisation" class="field-label">Organisation <span class="font-normal text-graphite">(optional)</span></label>
+              <input id="organisation" name="organisation" type="text" autocomplete="organization" class="field" />
+            </div>
+
+            <fieldset>
+              <legend class="field-label">What is this about?</legend>
+              <div class="mt-3 grid gap-2 sm:grid-cols-2">
+                {routes.map((route, i) => (
+                  <label class="choice">
+                    <input type="radio" name="topic" value={route.label} required checked={i === routes.length - 1} />
+                    <span>{route.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div>
+              <label for="message" class="field-label">Message</label>
+              <textarea id="message" name="message" rows="7" required minlength="20" class="field resize-y"></textarea>
+            </div>
+
+            <!-- Spam trap: hidden from people, visible to bots -->
+            <div class="hidden" aria-hidden="true">
+              <label for="website">Leave this field empty</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <button type="submit" class="min-h-12 bg-charcoal px-7 py-3 font-medium text-paper transition-colors hover:bg-olive-deep">
+              Send message
+            </button>
+          </form>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="border-t border-stone bg-paper" aria-labelledby="expect-title">
+    <div class="page-wrap section grid gap-10 md:grid-cols-12 md:gap-8">
+      <h2 id="expect-title" class="t-heading md:col-span-5">What to expect</h2>
+      <div class="prose-body md:col-span-6 md:col-start-7">
+        <p>
+          A short, specific message is the most useful. Explain who you are, what you are proposing and
+          why you think Tarvanta is the right fit.
+        </p>
+        <p>
+          We treat every enquiry as confidential. Please do not send material that is commercially
+          sensitive until we have agreed how it will be handled.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .field-label {
+    display: block;
+    font-weight: 560;
+    font-size: 0.9375rem;
+    margin-bottom: 0.5rem;
+  }
+  .field {
+    display: block;
+    width: 100%;
+    background: var(--color-paper);
+    border: 1px solid var(--color-graphite);
+    padding: 0.8rem 0.9rem;
+    font: inherit;
+    color: var(--color-charcoal);
+    border-radius: 0;
+    transition: border-color 160ms var(--ease-calm), box-shadow 160ms var(--ease-calm);
+  }
+  .field:hover { border-color: var(--color-charcoal); }
+  .field:focus-visible {
+    outline: none;
+    border-color: var(--color-olive);
+    box-shadow: 0 0 0 2px var(--color-olive);
+  }
+  .field:user-invalid { border-color: #8f2f1f; }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 2.75rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--color-stone);
+    background: var(--color-paper);
+    cursor: pointer;
+    font-size: 0.96875rem;
+    transition: border-color 160ms var(--ease-calm);
+  }
+  .choice:hover { border-color: var(--color-charcoal); }
+  .choice:has(input:checked) { border-color: var(--color-olive); box-shadow: inset 0 0 0 1px var(--color-olive); }
+  .choice input { accent-color: var(--color-olive); width: 1rem; height: 1rem; }
+</style>

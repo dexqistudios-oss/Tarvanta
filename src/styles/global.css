@@ -1,0 +1,270 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Design tokens
+   Every colour, typeface and measure the site uses is defined here.
+   Tailwind exposes them as utilities: bg-ivory, text-olive, font-display…
+------------------------------------------------------------------- */
+@theme {
+  /* Colour */
+  --color-ivory: #f2eee3;     /* page ground */
+  --color-paper: #fbf9f3;     /* raised surfaces, form fields */
+  --color-charcoal: #23221f;  /* primary text, dark sections */
+  --color-graphite: #55524b;  /* secondary text (6.7:1 on ivory) */
+  --color-stone: #c9c1b0;     /* rules and borders */
+  --color-olive: #5b5e3a;     /* working accent: links, focus (5.9:1 on ivory) */
+  --color-olive-deep: #444729;
+  --color-bronze: #a07a45;    /* drawings and large marks only */
+  --color-bronze-light: #c8a877; /* accent on charcoal (7.4:1) */
+  --color-ink-on-dark: #e9e4d8;  /* body text on charcoal */
+  --color-muted-on-dark: #b2ac9f;
+
+  /* Type */
+  --font-display: 'Newsreader Variable', 'Newsreader', Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Hanken Grotesk Variable', 'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Measure */
+  --container-page: 84rem;
+  --container-prose: 38rem;
+
+  /* Easing */
+  --ease-calm: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------
+   Base
+------------------------------------------------------------------- */
+@layer base {
+  :root {
+    color-scheme: light;
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+    --section-space: clamp(5rem, 11vw, 9.5rem);
+  }
+
+  html {
+    background-color: var(--color-ivory);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    scroll-padding-top: 6rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+
+  body {
+    font-size: 1.0625rem; /* 17px */
+    line-height: 1.65;
+    font-feature-settings: 'kern', 'liga';
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::selection {
+    background: var(--color-olive);
+    color: var(--color-paper);
+  }
+
+  /* One visible, consistent focus style everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--color-olive);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-bronze-light);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 380;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+    font-optical-sizing: auto;
+  }
+
+  p { text-wrap: pretty; }
+
+  img, svg { display: block; max-width: 100%; }
+}
+
+/* ------------------------------------------------------------------
+   Components (small, reusable typographic patterns)
+------------------------------------------------------------------- */
+@layer components {
+  .page-wrap {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section {
+    padding-block: var(--section-space);
+  }
+
+  /* Display scale — Newsreader at large optical size */
+  .t-hero {
+    font-family: var(--font-display);
+    font-weight: 330;
+    font-size: clamp(3rem, 9.2vw, 8.5rem);
+    line-height: 0.96;
+    letter-spacing: -0.028em;
+  }
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 350;
+    font-size: clamp(2.375rem, 5.4vw, 4.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.022em;
+  }
+  .t-heading {
+    font-family: var(--font-display);
+    font-weight: 380;
+    font-size: clamp(1.75rem, 3vw, 2.625rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+  }
+  .t-subheading {
+    font-family: var(--font-display);
+    font-weight: 420;
+    font-size: clamp(1.3rem, 1.8vw, 1.625rem);
+    line-height: 1.25;
+  }
+  .t-lede {
+    font-family: var(--font-display);
+    font-weight: 360;
+    font-size: clamp(1.3rem, 2vw, 1.75rem);
+    line-height: 1.42;
+    letter-spacing: -0.005em;
+  }
+  .t-small {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+  /* Quiet sentence-case label set in the sans */
+  .t-label {
+    font-size: 0.9375rem;
+    font-weight: 560;
+    line-height: 1.4;
+    color: var(--color-graphite);
+  }
+  .on-dark .t-label { color: var(--color-muted-on-dark); }
+
+  /* Long-form reading text */
+  .prose-body {
+    max-width: var(--container-prose);
+  }
+  .prose-body > * + * { margin-top: 1.25em; }
+  .prose-body p { color: color-mix(in srgb, var(--color-charcoal) 88%, var(--color-ivory)); }
+
+  /* Article typography (Insights template) */
+  .article-body {
+    max-width: 40rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1.4vw, 1.3rem);
+    line-height: 1.7;
+    font-weight: 370;
+  }
+  .article-body > * + * { margin-top: 1.15em; }
+  .article-body h2 {
+    font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+    line-height: 1.18;
+    margin-top: 2.2em;
+  }
+  .article-body h3 {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    font-weight: 620;
+    letter-spacing: 0;
+    margin-top: 2em;
+  }
+  .article-body a { color: var(--color-olive); text-decoration: underline; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  .article-body a:hover { text-decoration-thickness: 2px; }
+  .article-body blockquote {
+    border-left: 2px solid var(--color-bronze);
+    padding-left: 1.25em;
+    font-style: italic;
+    color: var(--color-graphite);
+  }
+  .article-body ul { list-style: disc; padding-left: 1.2em; }
+  .article-body ol { list-style: decimal; padding-left: 1.4em; }
+  .article-body li + li { margin-top: 0.4em; }
+  .article-body hr { border: 0; border-top: 1px solid var(--color-stone); margin-block: 2.5em; }
+  .article-body code { font-size: 0.85em; background: var(--color-paper); padding: 0.1em 0.3em; }
+  .article-body img { margin-block: 2em; }
+
+  /* Text link with a calm underline that thickens on hover */
+  .link {
+    color: var(--color-olive);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-thickness 160ms var(--ease-calm), color 160ms var(--ease-calm);
+  }
+  .link:hover { text-decoration-thickness: 2px; color: var(--color-olive-deep); }
+  .on-dark .link { color: var(--color-bronze-light); }
+  .on-dark .link:hover { color: var(--color-paper); }
+
+  .rule { border: 0; border-top: 1px solid var(--color-stone); }
+  .on-dark .rule { border-top-color: rgb(233 228 216 / 0.18); }
+}
+
+/* ------------------------------------------------------------------
+   Header: gains a hairline once the page has scrolled.
+   Pure CSS scroll-driven animation; browsers without support simply
+   keep the static header.
+------------------------------------------------------------------- */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-header {
+      animation: header-settle linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 120px;
+    }
+  }
+}
+@keyframes header-settle {
+  from { border-bottom-color: transparent; background-color: rgb(242 238 227 / 0); }
+  to { border-bottom-color: var(--color-stone); background-color: rgb(242 238 227 / 0.94); }
+}
+
+/* ------------------------------------------------------------------
+   The single orchestrated motion moment: hero strata draw in once.
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .strata-line {
+    stroke-dasharray: var(--len, 2400);
+    stroke-dashoffset: var(--len, 2400);
+    animation: strata-draw 2.2s var(--ease-calm) forwards;
+    animation-delay: calc(var(--i, 0) * 70ms + 200ms);
+  }
+  .strata-stem {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: strata-draw 1.4s var(--ease-calm) forwards;
+    animation-delay: calc(1.3s + var(--i, 0) * 120ms);
+  }
+  .strata-node {
+    opacity: 0;
+    animation: strata-fade 0.6s var(--ease-calm) forwards;
+    animation-delay: calc(2.1s + var(--i, 0) * 120ms);
+  }
+}
+@keyframes strata-draw { to { stroke-dashoffset: 0; } }
+@keyframes strata-fade { to { opacity: 1; } }
+
+/* Visually hidden but available to assistive technology */
+.sr-only-focusable:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

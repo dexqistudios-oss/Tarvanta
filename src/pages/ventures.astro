@@ -1,0 +1,140 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import Split from '@/components/ui/Split.astro';
+import Button from '@/components/ui/Button.astro';
+import Ecosystem from '@/components/sections/Ecosystem.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+import { breadcrumbSchema } from '@/components/seo/schema';
+import { getVentures } from '@/lib/content';
+
+const ventures = await getVentures();
+const slots = Math.max(3, ventures.length);
+
+const retains = [
+  {
+    title: 'An independent name',
+    body: 'Chosen for the venture’s customers and market, not to echo the parent.',
+  },
+  {
+    title: 'Its own brand identity',
+    body: 'Visual identity, voice and positioning designed for its own audience.',
+  },
+  {
+    title: 'A dedicated website',
+    body: 'A home of its own, linked from here once the venture is public.',
+  },
+  {
+    title: 'Separate social presence',
+    body: 'Its own channels and community, managed in its own voice.',
+  },
+];
+
+const shares = [
+  'Research and strategic perspective',
+  'Validation discipline before major commitments',
+  'Operating standards and governance',
+  'A patient, long-term commitment',
+];
+---
+
+<BaseLayout
+  title="Ventures"
+  description="The Tarvanta ecosystem: independent ventures with their own names, brand identities, websites and social presence, built on shared strategic foundations."
+  schema={breadcrumbSchema([{ name: 'Ventures', path: '/ventures/' }])}
+>
+  <PageHero
+    page="Ventures"
+    statement="Independent businesses, grown from shared ground."
+    lede="Ventures developed through Tarvanta keep their own names and identities. What they share sits beneath the surface: the thinking, discipline and commitment that help a business endure."
+  />
+
+  <!-- Ecosystem -->
+  <section class="pb-[var(--section-space)]" aria-labelledby="ecosystem-heading">
+    <div class="page-wrap">
+      <h2 id="ecosystem-heading" class="sr-only">The Tarvanta ecosystem</h2>
+      <Ecosystem ventures={ventures} slots={slots} />
+    </div>
+  </section>
+
+  <!-- What ventures keep -->
+  <section class="section border-t border-stone" aria-labelledby="keep-title">
+    <div class="page-wrap">
+      <Split note="Visitors may meet a venture without ever seeing the Tarvanta name. That is intended.">
+        <h2 slot="heading" id="keep-title" class="t-heading max-w-[15ch]">What each venture keeps</h2>
+        <dl class="grid gap-x-10 gap-y-10 sm:grid-cols-2">
+          {retains.map((r) => (
+            <div class="border-t border-charcoal pt-5">
+              <dt class="t-subheading">{r.title}</dt>
+              <dd class="mt-2 text-graphite">{r.body}</dd>
+            </div>
+          ))}
+        </dl>
+      </Split>
+    </div>
+  </section>
+
+  <!-- What they share -->
+  <section class="section bg-paper" aria-labelledby="share-title">
+    <div class="page-wrap">
+      <Split>
+        <h2 slot="heading" id="share-title" class="t-heading max-w-[15ch]">What they share</h2>
+        <div>
+          <ul class="border-t border-stone">
+            {shares.map((s) => (
+              <li class="border-b border-stone py-5 font-display text-[clamp(1.25rem,2vw,1.5rem)] leading-snug">{s}</li>
+            ))}
+          </ul>
+          <p class="mt-8 max-w-[52ch] text-graphite">
+            Read more about how ventures are developed in <a href="/approach/" class="link">our approach</a>.
+          </p>
+        </div>
+      </Split>
+    </div>
+  </section>
+
+  <!-- Current ventures / disclosure policy -->
+  <section class="section" aria-labelledby="current-title">
+    <div class="page-wrap">
+      <Split>
+        <h2 slot="heading" id="current-title" class="t-heading max-w-[15ch]">Current ventures</h2>
+        <div class="prose-body">
+          {ventures.length === 0 ? (
+            <>
+              <p class="t-lede text-charcoal">
+                Ventures are listed here once they are ready to be introduced publicly.
+              </p>
+              <p>
+                Until then, work in progress stays confidential. This protects the ventures, their
+                partners and the people involved while ideas are still being tested.
+              </p>
+              <Placeholder note="Add a Markdown file per venture in src/content/ventures/ (see example-venture.md). Published ventures appear in the diagram above and in this section." />
+            </>
+          ) : (
+            <p>
+              The ventures shown above are those ready to be introduced publicly. Others remain
+              confidential while they are being developed.
+            </p>
+          )}
+        </div>
+      </Split>
+    </div>
+  </section>
+
+  <!-- Invitation -->
+  <section class="on-dark bg-charcoal text-ink-on-dark" aria-labelledby="ventures-cta-title">
+    <div class="page-wrap section grid gap-10 md:grid-cols-12 md:gap-8">
+      <h2 id="ventures-cta-title" class="t-display text-paper md:col-span-7">
+        Have an idea that deserves a long future?
+      </h2>
+      <div class="md:col-span-4 md:col-start-9 md:self-end">
+        <p class="text-ink-on-dark">
+          We are interested in founders, operators and partners who want to build something durable.
+        </p>
+        <div class="mt-8">
+          <Button href="/contact/" variant="solid-light">Contact Tarvanta</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

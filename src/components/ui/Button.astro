@@ -1,0 +1,28 @@
+---
+/**
+ * Link styled as an action. `solid` is used once per view at most;
+ * `quiet` is a text link with a rule beneath it.
+ */
+export interface Props {
+  href: string;
+  variant?: 'solid' | 'quiet' | 'solid-light';
+  class?: string;
+}
+const { href, variant = 'solid', class: className = '' } = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={[
+    'inline-flex items-center text-[1rem] font-medium transition-colors duration-200',
+    variant === 'solid' &&
+      'min-h-12 bg-charcoal px-6 py-3 text-paper hover:bg-olive-deep',
+    variant === 'solid-light' &&
+      'min-h-12 bg-paper px-6 py-3 text-charcoal hover:bg-bronze-light',
+    variant === 'quiet' &&
+      'border-b border-current pb-1 text-charcoal hover:border-olive hover:text-olive',
+    className,
+  ]}
+>
+  <slot />
+</a>

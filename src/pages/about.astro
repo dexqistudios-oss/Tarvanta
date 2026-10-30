@@ -1,0 +1,139 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import Split from '@/components/ui/Split.astro';
+import Button from '@/components/ui/Button.astro';
+import Strata from '@/components/art/Strata.astro';
+import { breadcrumbSchema } from '@/components/seo/schema';
+import { principles } from '@/data/principles';
+---
+
+<BaseLayout
+  title="About"
+  description="Why Tarvanta exists: an insights-led platform for developing independent ventures with a long-term perspective, built on clear values and principles."
+  schema={breadcrumbSchema([{ name: 'About', path: '/about/' }])}
+>
+  <PageHero
+    page="About"
+    statement="We exist to give good ideas the time and structure to endure."
+    lede="Tarvanta is a venture platform shaped by a simple observation: many promising ideas fail not because they were wrong, but because they were rushed, under-examined or forced into the wrong form."
+  />
+
+  <div class="h-40 md:h-56" aria-hidden="true">
+    <Strata stems={[0.78]} seed={5} layers={11} />
+  </div>
+
+  <!-- Why Tarvanta exists -->
+  <section class="section" aria-labelledby="why-title">
+    <div class="page-wrap">
+      <Split>
+        <h2 slot="heading" id="why-title" class="t-heading max-w-[14ch]">Why Tarvanta exists</h2>
+        <div class="prose-body">
+          <p>
+            Building a business is usually treated as a race. Speed matters, but it is a poor substitute
+            for understanding. Tarvanta was created to work the other way round: to understand a problem
+            properly, form a clear view of it, and only then build.
+          </p>
+          <p>
+            That work is most valuable when it can be shared. Rather than building one company, Tarvanta
+            is a platform through which several independent ventures can be developed, each benefiting
+            from the same discipline while answering to its own customers.
+          </p>
+        </div>
+      </Split>
+    </div>
+  </section>
+
+  <!-- Purpose and ambition -->
+  <section class="section border-t border-stone" aria-labelledby="purpose-title">
+    <div class="page-wrap">
+      <Split>
+        <h2 slot="heading" id="purpose-title" class="t-heading max-w-[14ch]">Purpose and ambition</h2>
+        <div class="prose-body">
+          <p class="t-lede text-charcoal">
+            Our purpose is to turn well-researched ideas into businesses that are useful, well run and
+            built to last.
+          </p>
+          <p>
+            Our ambition is global. Ventures are designed from the outset to serve customers across
+            markets, drawing on opportunities wherever they are found rather than wherever is closest.
+          </p>
+        </div>
+      </Split>
+    </div>
+  </section>
+
+  <!-- Operating philosophy (dark) -->
+  <section class="on-dark bg-charcoal text-ink-on-dark" aria-labelledby="operating-title">
+    <div class="page-wrap section">
+      <Split>
+        <h2 slot="heading" id="operating-title" class="t-heading max-w-[14ch] text-paper">
+          How the platform operates
+        </h2>
+        <div class="prose-body">
+          <p class="text-ink-on-dark">
+            Tarvanta holds the parts of venture-building that benefit from being shared: research,
+            strategic thinking, operating standards and long-term commitment. Ventures hold what should
+            be their own: their name, brand, product, voice and relationship with customers.
+          </p>
+          <p class="text-ink-on-dark">
+            This separation is deliberate. It lets each business be judged on its own merits, adapt to
+            its own market and, where it makes sense, stand entirely on its own.
+          </p>
+          <p><a href="/approach/" class="link">See the approach stage by stage</a></p>
+        </div>
+      </Split>
+    </div>
+  </section>
+
+  <!-- Long-term perspective -->
+  <section class="section" aria-labelledby="longterm-title">
+    <div class="page-wrap">
+      <div class="grid gap-10 md:grid-cols-12 md:gap-8">
+        <h2 id="longterm-title" class="t-label md:col-span-3">A long-term perspective</h2>
+        <div class="md:col-span-8 md:col-start-5">
+          <p class="t-display max-w-[22ch]">
+            We judge decisions by how they will look in ten years, not ten weeks.
+          </p>
+          <p class="mt-8 max-w-[56ch] text-graphite">
+            That means choosing durable markets over fashionable ones, steady foundations over quick
+            wins, and businesses that serve people well enough to keep them. It also means being willing
+            to stop early when an idea does not hold up.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values and principles -->
+  <section class="section border-t border-stone bg-paper" aria-labelledby="values-title">
+    <div class="page-wrap">
+      <div class="max-w-[38rem]">
+        <h2 id="values-title" class="t-heading">Values and principles</h2>
+        <p class="mt-5 text-graphite">
+          The commitments that shape how Tarvanta works, and how its ventures are expected to behave.
+        </p>
+      </div>
+
+      <dl class="mt-14 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
+        {principles.map((p) => (
+          <div class="border-t border-charcoal pt-6">
+            <dt class="t-subheading">{p.title}</dt>
+            <dd class="mt-3 text-graphite">{p.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Next -->
+  <section class="section" aria-labelledby="next-title">
+    <div class="page-wrap flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+      <h2 id="next-title" class="t-heading max-w-[20ch]">See how these principles become practice.</h2>
+      <div class="flex flex-wrap gap-x-8 gap-y-5">
+        <Button href="/approach/">Our approach</Button>
+        <Button href="/contact/" variant="quiet">Contact us</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

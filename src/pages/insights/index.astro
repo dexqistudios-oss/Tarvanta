@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/ui/PageHero.astro';
+import InsightList from '@/components/sections/InsightList.astro';
+import Placeholder from '@/components/ui/Placeholder.astro';
+import { breadcrumbSchema } from '@/components/seo/schema';
+import { insightTopics } from '@/config/site';
+import { getInsights, formatDate, readingTime } from '@/lib/content';
+
+const all = await getInsights();
+const lead = all.find((e) => e.data.featured) ?? all[0];
+const rest = all.filter((e) => e !== lead);
+
+const topicNotes: Record<string, string> = {
+  'Strategic perspectives': 'How durable advantages are formed, and how they fade.',
+  'Business and industry': 'Observations on how sectors are changing and why.',
+  Entrepreneurship: 'The craft of starting, testing and building ventures.',
+  'Global opportunities': 'Ideas that travel across markets, and those that do not.',
+  'Innovation and emerging markets': 'Where new technology meets unmet need.',
+};
+---
+
+<BaseLayout
+  title="Insights"
+  description="Tarvanta Insights: considered perspectives on strategy, business and industry, entrepreneurship, global opportunities, innovation and emerging markets."
+  schema={breadcrumbSchema([{ name: 'Insights', path: '/insights/' }])}
+>
+  <PageHero
+    page="Insights"
+    statement="Thinking in public, carefully."
+    lede="Insights is where Tarvanta sets out the perspectives behind its work. Pieces are published when there is something worth saying, and every claim is sourced."
+  />
+
+  {lead && (
+    <section class="page-wrap pb-20 md:pb-28" aria-labelledby="lead-title">
+      <article class="group relative grid gap-8 border-t border-charcoal pt-10 md:grid-cols-12 md:gap-8 md:pt-14">
+        <div class="t-small text-graphite md:col-span-3">
+          <p>{lead.data.topic}</p>
+          <p class="mt-1">
+            <time datetime={lead.data.published.toISOString()}>{formatDate(lead.data.published)}</time>
+          </p>
+          <p class="mt-1">{readingTime(lead.body)}</p>
+          {lead.data.draft && <p class="mt-1 text-olive">Draft, visible in development only</p>}
+        </div>
+        <div class="md:col-span-8 md:col-start-5">
+          <h2 id="lead-title" class="t-display max-w-[18ch]">
+            <a href={`/insights/${lead.id}/`} class="after:absolute after:inset-0 decoration-1 underline-offset-[0.12em] group-hover:underline">
+              {lead.data.title}
+            </a>
+          </h2>
+          <p class="t-lede mt-6 max-w-[42ch] text-graphite">{lead.data.summary}</p>
+        </div>
+      </article>
+    </section>
+  )}
+
+  <section class="page-wrap pb-[var(--section-space)]" aria-labelledby="archive-title">
+    <h2 id="archive-title" class:list={['t-label mb-6', !lead && 'sr-only']}>
+      {lead ? 'More insights' : 'Articles'}
+    </h2>
+    {(rest.length > 0 || !lead) && <InsightList entries={rest} as="h3" />}
+    {!lead && (
+      <Placeholder
+        class="mt-8"
+        note="Add Markdown articles to src/content/insights/ (copy writing-for-tarvanta-insights.md and set draft: false). They will appear here, newest first."
+      />
+    )}
+  </section>
+
+  <section class="section border-t border-stone bg-paper" aria-labelledby="topics-title">
+    <div class="page-wrap">
+      <h2 id="topics-title" class="t-heading">What we write about</h2>
+      <dl class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {insightTopics.map((topic) => (
+          <div class="border-t border-charcoal pt-5">
+            <dt class="t-subheading">{topic}</dt>
+            <dd class="mt-2 text-graphite">{topicNotes[topic]}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+</BaseLayout>

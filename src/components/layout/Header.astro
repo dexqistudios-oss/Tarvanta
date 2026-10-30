@@ -1,0 +1,139 @@
+---
+import { navigation } from '@/config/site';
+import Wordmark from '@/components/ui/Wordmark.astro';
+
+const current = Astro.url.pathname.replace(/\/?$/, '/');
+const isCurrent = (href: string) => current === href || (href !== '/' && current.startsWith(href));
+---
+
+<header class="site-header sticky top-0 z-40 border-b border-transparent bg-ivory/95 backdrop-blur-[6px]">
+  <div class="page-wrap flex h-[4.5rem] items-center justify-between gap-6 md:h-20">
+    <a href="/" class="-m-2 p-2 text-charcoal" aria-label="Tarvanta, home">
+      <Wordmark />
+    </a>
+
+    <!-- Desktop navigation -->
+    <nav aria-label="Primary" class="hidden md:block">
+      <ul class="flex items-center gap-1 lg:gap-2">
+        {navigation.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              class:list={[
+                'nav-link relative inline-block px-3 py-2 text-[0.96875rem] text-charcoal transition-colors hover:text-olive',
+                item.label === 'Contact' && 'ml-2 border border-charcoal/80 px-4 hover:border-olive',
+              ]}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Mobile menu toggle (enhanced by the script below) -->
+    <button
+      type="button"
+      class="menu-toggle -mr-2 inline-flex items-center gap-2 p-2 text-[0.96875rem] md:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      hidden
+    >
+      <span class="menu-toggle-label">Menu</span>
+      <svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true" focusable="false" class="menu-icon">
+        <path class="bar-a" d="M0 3h20" stroke="currentColor" stroke-width="1.5" />
+        <path class="bar-b" d="M0 11h20" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile navigation. Visible without JavaScript; collapsible with it. -->
+  <nav id="mobile-menu" aria-label="Primary" class="mobile-menu border-t border-stone bg-ivory md:hidden">
+    <ul class="page-wrap py-4">
+      {navigation.map((item) => (
+        <li class="border-b border-stone/70 last:border-0">
+          <a
+            href={item.href}
+            aria-current={isCurrent(item.href) ? 'page' : undefined}
+            class="block py-4 font-display text-[1.75rem] leading-tight text-charcoal aria-[current=page]:text-olive"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .nav-link[aria-current='page'] {
+    color: var(--color-olive);
+  }
+  .nav-link[aria-current='page']:not(.border)::after {
+    content: '';
+    position: absolute;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.2rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  /* With JS, the mobile menu becomes a disclosure panel. */
+  :global(html.js) .mobile-menu {
+    display: none;
+  }
+  :global(html.js) .mobile-menu.is-open {
+    display: block;
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    height: calc(100dvh - 4.5rem);
+    overflow-y: auto;
+  }
+  @media (min-width: 48rem) {
+    :global(html.js) .mobile-menu.is-open { display: none; }
+  }
+
+  .menu-icon path { transition: transform 180ms var(--ease-calm); transform-origin: center; }
+  .menu-toggle[aria-expanded='true'] .bar-a { transform: translateY(4px) rotate(45deg); }
+  .menu-toggle[aria-expanded='true'] .bar-b { transform: translateY(-4px) rotate(-45deg); }
+  @media (prefers-reduced-motion: reduce) {
+    .menu-icon path { transition: none; }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const label = toggle?.querySelector('.menu-toggle-label');
+
+  if (toggle && menu) {
+    toggle.hidden = false;
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      menu.classList.toggle('is-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (label) label.textContent = open ? 'Close' : 'Menu';
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+
+    window.matchMedia('(min-width: 48rem)').addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>

@@ -1,0 +1,53 @@
+---
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/newsreader/wght-italic.css';
+import '@fontsource-variable/hanken-grotesk';
+import '@/styles/global.css';
+
+import { site } from '@/config/site';
+import SEO from '@/components/seo/SEO.astro';
+import type { Props as SEOProps } from '@/components/seo/SEO.astro';
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+
+export type Props = SEOProps;
+const seo = Astro.props;
+---
+
+<!doctype html>
+<html lang={site.lang} class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.replace('no-js', 'js');</script>
+    <meta name="theme-color" content="#f2eee3" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <SEO {...seo} />
+  </head>
+
+  <body>
+    <a
+      href="#main"
+      class="sr-only-focusable fixed left-4 top-4 z-50 bg-charcoal px-4 py-3 text-paper"
+    >
+      Skip to main content
+    </a>
+
+    <Header />
+
+    <main id="main" tabindex="-1" class="flex-1 outline-none">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

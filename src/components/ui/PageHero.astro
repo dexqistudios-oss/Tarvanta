@@ -1,0 +1,25 @@
+---
+/**
+ * Opening for inner pages: page name as a quiet label, a large display
+ * statement, and an optional lede set off to the right.
+ */
+export interface Props {
+  /** The page name, e.g. "About". Shown as a quiet locator above the H1. */
+  page: string;
+  /** The display statement — this is the page's H1. */
+  statement: string;
+  lede?: string;
+}
+const { page, statement, lede } = Astro.props;
+---
+
+<section class="page-wrap pb-16 pt-16 md:pb-24 md:pt-24" aria-labelledby="page-title">
+  <p class="t-label">{page}</p>
+  <h1 id="page-title" class="t-display mt-6 max-w-[17ch] text-charcoal md:mt-8">{statement}</h1>
+  {lede && (
+    <div class="mt-10 grid md:mt-14 md:grid-cols-12">
+      <p class="t-lede text-graphite md:col-span-6 md:col-start-7">{lede}</p>
+    </div>
+  )}
+  <slot />
+</section>

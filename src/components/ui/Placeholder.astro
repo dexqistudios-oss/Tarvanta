@@ -1,0 +1,28 @@
+---
+/**
+ * Editable placeholder.
+ *
+ * In development (`npm run dev`) it renders a dashed, clearly labelled box so
+ * missing content is obvious while editing. In production it renders nothing,
+ * so visitors never see placeholder text or invented information.
+ */
+export interface Props {
+  /** What belongs here, and where to edit it. */
+  note: string;
+  class?: string;
+}
+const { note, class: className = '' } = Astro.props;
+const show = import.meta.env.DEV;
+---
+
+{show && (
+  <div
+    class:list={[
+      'border border-dashed border-olive/60 bg-paper/70 px-4 py-3 font-sans text-[0.875rem] leading-snug text-olive-deep',
+      className,
+    ]}
+    data-placeholder
+  >
+    <strong class="font-semibold">Placeholder (development only):</strong> {note}
+  </div>
+)}

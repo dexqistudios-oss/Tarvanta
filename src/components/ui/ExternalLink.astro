@@ -1,0 +1,16 @@
+---
+/**
+ * Secure external link: opens in a new tab with rel="noopener noreferrer"
+ * and tells screen-reader users that it does.
+ */
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends Omit<HTMLAttributes<'a'>, 'target' | 'rel'> {
+  href: string;
+}
+const { href, ...rest } = Astro.props;
+---
+
+<a href={href} target="_blank" rel="noopener noreferrer" {...rest}>
+  <slot /><span class="sr-only"> (opens in a new tab)</span>
+</a>

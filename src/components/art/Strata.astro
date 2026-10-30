@@ -1,0 +1,134 @@
+---
+/**
+ * Strata — the site's signature drawing.
+ *
+ * Horizontal layers stand for accumulated time and insight; a few stems rise
+ * out of them, each ending in a single point: independent ventures growing
+ * from shared ground. Paths are generated deterministically at build time,
+ * so there is no runtime JavaScript and no image request.
+ */
+export interface Props {
+  /** Number of strata layers. */
+  layers?: number;
+  /** Horizontal positions (0–1) of rising stems. Empty for none. */
+  stems?: number[];
+  /** Animate the drawing in on load (respects reduced motion). */
+  animate?: boolean;
+  /** Seed shifts the wave phases so each use looks slightly different. */
+  seed?: number;
+  /** Colour scheme. */
+  tone?: 'light' | 'dark';
+  class?: string;
+  /** Accessible description. Omit to mark the drawing decorative. */
+  label?: string;
+}
+
+const {
+  layers = 15,
+  stems = [0.2, 0.46, 0.69, 0.87],
+  animate = false,
+  seed = 1,
+  tone = 'light',
+  class: className = '',
+  label,
+} = Astro.props;
+
+const W = 1600;
+const H = 560;
+const top = 210;
+const depth = 330;
+
+// Deterministic pseudo-random from the seed
+const rand = (n: number) => {
+  const x = Math.sin(n * 12.9898 + seed * 78.233) * 43758.5453;
+  return x - Math.floor(x);
+};
+
+const lineY = (i: number, x: number) => {
+  const t = i / (layers - 1);
+  const base = top + depth * Math.pow(t, 0.78);
+  // Small per-layer variation keeps layers distinct without crossing;
+  // a larger shared swell makes them read as one formation.
+  const amp = 9 * (1 - t * 0.5);
+  const p1 = rand(i + 1) * Math.PI * 2;
+  const p2 = rand(i + 50) * Math.PI * 2;
+  const u = x / W;
+  return (
+    base +
+    amp * Math.sin(u * Math.PI * 2.4 + p1) +
+    amp * 0.4 * Math.sin(u * Math.PI * 6.1 + p2) +
+    (26 - t * 10) * Math.sin(u * Math.PI * 1.6 + 0.4 + seed * 0.7) +
+    12 * Math.sin(u * Math.PI * 3.3 + 1.9 + seed)
+  );
+};
+
+const step = 20;
+const lines = Array.from({ length: layers }, (_, i) => {
+  let d = '';
+  for (let x = -20; x <= W + 20; x += step) {
+    const y = lineY(i, x);
+    d += `${x === -20 ? 'M' : 'L'}${x.toFixed(0)} ${y.toFixed(1)}`;
+  }
+  const accent = i === 3 || i === Math.floor(layers * 0.62);
+  return { d, i, accent };
+});
+
+// Each stem rises from the third layer to a height that varies by venture.
+const stemPaths = stems.map((pos, i) => {
+  const x = Math.round(pos * W);
+  const y0 = lineY(2, x);
+  const rise = 90 + rand(i + 200) * 120;
+  const y1 = y0 - rise;
+  return { x, y0, y1, i };
+});
+
+const ink = tone === 'dark' ? 'var(--color-ink-on-dark)' : 'var(--color-charcoal)';
+const accentInk = tone === 'dark' ? 'var(--color-bronze-light)' : 'var(--color-bronze)';
+---
+
+<svg
+  viewBox={`0 0 ${W} ${H}`}
+  preserveAspectRatio="xMidYMid slice"
+  class:list={['h-full w-full', className]}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+  fill="none"
+>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    {lines.map((l) => (
+      <path
+        d={l.d}
+        class:list={[animate && 'strata-line']}
+        style={`--i:${l.i};--len:6000`}
+        stroke={l.accent ? accentInk : ink}
+        stroke-opacity={l.accent ? 0.9 : 0.22 + (l.i / layers) * 0.38}
+        stroke-width={l.accent ? 1.6 : 1.1}
+        vector-effect="non-scaling-stroke"
+      />
+    ))}
+
+    {stemPaths.map((s) => (
+      <>
+        <path
+          d={`M${s.x} ${s.y0.toFixed(1)} L${s.x} ${s.y1.toFixed(1)}`}
+          class:list={[animate && 'strata-stem']}
+          style={`--i:${s.i}`}
+          stroke={ink}
+          stroke-opacity="0.75"
+          stroke-width="1.3"
+          vector-effect="non-scaling-stroke"
+        />
+        <circle
+          cx={s.x}
+          cy={s.y1.toFixed(1)}
+          r="6"
+          class:list={[animate && 'strata-node']}
+          style={`--i:${s.i}`}
+          fill={accentInk}
+        />
+      </>
+    ))}
+  </g>
+</svg>

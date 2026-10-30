@@ -1,0 +1,55 @@
+---
+/**
+ * Editorial index of Insights articles: ruled rows rather than cards.
+ * Renders a considered empty state when nothing has been published yet.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { formatDate } from '@/lib/content';
+import { insightTopics } from '@/config/site';
+
+export interface Props {
+  entries: CollectionEntry<'insights'>[];
+  /** Heading level for article titles in the list. */
+  as?: 'h2' | 'h3';
+  tone?: 'light' | 'dark';
+}
+const { entries, as: Tag = 'h3', tone = 'light' } = Astro.props;
+const dark = tone === 'dark';
+---
+
+{entries.length > 0 ? (
+  <ol class:list={['border-t', dark ? 'border-ink-on-dark/20' : 'border-stone']} role="list">
+    {entries.map((entry) => (
+      <li class:list={['group relative border-b', dark ? 'border-ink-on-dark/20' : 'border-stone']}>
+        <article class="grid gap-3 py-8 md:grid-cols-12 md:gap-8 md:py-10">
+          <div class:list={['t-small md:col-span-3', dark ? 'text-muted-on-dark' : 'text-graphite']}>
+            <p>{entry.data.topic}</p>
+            <p class="mt-1">
+              <time datetime={entry.data.published.toISOString()}>{formatDate(entry.data.published)}</time>
+              {entry.data.draft && <span class="ml-2 text-olive">(draft, dev only)</span>}
+            </p>
+          </div>
+          <div class="md:col-span-8 md:col-start-5">
+            <Tag class="t-subheading max-w-[30ch]">
+              <a
+                href={`/insights/${entry.id}/`}
+                class="after:absolute after:inset-0 decoration-1 underline-offset-[0.2em] group-hover:underline"
+              >
+                {entry.data.title}
+              </a>
+            </Tag>
+            <p class:list={['mt-3 max-w-[60ch]', dark ? 'text-ink-on-dark' : 'text-graphite']}>{entry.data.summary}</p>
+          </div>
+        </article>
+      </li>
+    ))}
+  </ol>
+) : (
+  <div class:list={['border-t pt-8', dark ? 'border-ink-on-dark/20' : 'border-stone']}>
+    <p class="t-subheading max-w-[28ch]">The first essays are being written.</p>
+    <p class:list={['mt-4 max-w-[52ch]', dark ? 'text-ink-on-dark' : 'text-graphite']}>
+      Insights will publish considered perspectives on {insightTopics.slice(0, -1).map((t) => t.toLowerCase()).join(', ')}
+      {' '}and {insightTopics[insightTopics.length - 1].toLowerCase()}.
+    </p>
+  </div>
+)}

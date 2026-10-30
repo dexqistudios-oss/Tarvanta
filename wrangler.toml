@@ -1,0 +1,9 @@
+# Cloudflare Pages configuration.
+# With GitHub-connected Pages projects, this file is read at build time.
+# Build command and output directory are also set in the Pages dashboard:
+#   Build command:          npm run build
+#   Build output directory: dist
+#   Environment variable:   NODE_VERSION = 22
+name = "tarvanta"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-01"
