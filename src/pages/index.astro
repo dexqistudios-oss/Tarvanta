@@ -128,7 +128,7 @@ const description = 'Tarvanta is an independent, insights-led venture platform c
         try {
           const response = await fetch(contactForm.action, {method:'POST',body:new FormData(contactForm),headers:{'Accept':'application/json'}});
           const result = await response.json();
-          if (!response.ok || result.success === 'false' || result.success === false) throw new Error(result.message || 'The message could not be sent.');
+          if (!response.ok || String(result.success) !== 'true') throw new Error(result.message || 'The message could not be sent.');
           contactForm.reset();
           formStatus.textContent = 'Thank you. Your message has been sent. We’ll be in touch soon.';
           submitButton.innerHTML = 'Message sent ✓';
