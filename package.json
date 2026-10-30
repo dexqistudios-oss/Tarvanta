@@ -9,10 +9,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm audit --json | node scripts/audit-summary.mjs; astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "audit:summary": "npm audit --json | node scripts/audit-summary.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.3.0",
